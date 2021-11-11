@@ -1,7 +1,12 @@
-import 'package:task_repository/src/models/models.dart';
+part of 'data_provider.dart';
 
 abstract class TaskDataProvider {
-  Future<Task> get();
+  /// Gets all the [Task]s.
+  Future<List<Task>> getAll();
+
+  /// Deletes a [Task] by its [id].
   Future<void> delete(int id);
+
+  /// Creates a new [Task].
   Future<Task> create(Task task);
 }
