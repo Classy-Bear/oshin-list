@@ -15,7 +15,7 @@ class TaskRepository implements TaskDataProvider {
   final http.Client _httpClient;
 
   /// get the list of [Task] created.
-  Future<Task> Get() async {
+  Future<Task> get() async {
     late final http.Response response;
     try {
       response = await _httpClient.get(Uri.parse(apiTask));
@@ -33,10 +33,9 @@ class TaskRepository implements TaskDataProvider {
     }
   }
 
-  /// delete a [Task] by its [id] and return a list of the rest o the [Task].
-  Future<Task> Delete(int id) async {
+  /// delete a [Task] by its [id] .
+  Future<void> delete(int id) async {
     late final http.Response response;
-
     try {
       response = await _httpClient.delete(Uri.parse(deleteTask(id)));
     } catch (e) {
@@ -44,17 +43,11 @@ class TaskRepository implements TaskDataProvider {
     }
     final statusCode = response.statusCode;
     if (statusCode != HttpStatus.ok) throw ServerError();
-    try {
-      return Task.fromJson(response.body);
-    } on Exception {
-      throw ServerError();
-    }
   }
 
   /// create a new [Task] and return a new list.
-  Future<Task> Create(Task task) async {
+  Future<Task> create(Task task) async {
     late final http.Response response;
-
     try {
       response = await _httpClient.post(Uri.parse(apiTask),
           body: json.encode({
