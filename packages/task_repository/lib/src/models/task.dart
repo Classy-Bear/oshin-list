@@ -2,15 +2,6 @@ part of 'models.dart';
 
 //TODO: poner clase privada
 class Task extends Equatable {
-  Task({
-    this.id,
-    this.title,
-    this.description,
-    this.type,
-    this.date,
-    this.color,
-  });
-
   final int? id;
   final String? title;
   final String? description;
