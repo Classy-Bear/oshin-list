@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:task_repository/src/data_provider/task_data_provider.dart';
 import 'package:task_repository/src/utils/exceptions.dart';
 import 'package:task_repository/src/utils/global.dart';
 import 'package:task_repository/task_repository.dart';
 import 'package:http/http.dart' as http;
 
-class TaskRepository {
+class TaskRepository implements TaskDataProvider {
   TaskRepository({
     http.Client? httpClient,
   }) : _httpClient = httpClient ?? http.Client();
@@ -60,7 +61,7 @@ class TaskRepository {
             "title": task.title,
             "description": task.description,
             "type": task.type,
-            "date": task.date,
+            "date": task.date!.toIso8601String(),
             "color": task.color,
           }));
     } catch (_) {
