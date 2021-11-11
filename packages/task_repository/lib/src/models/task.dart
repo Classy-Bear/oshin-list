@@ -1,6 +1,5 @@
 part of 'models.dart';
 
-//TODO: poner clase privada
 class Task extends Equatable {
   final int? id;
   final String? title;
@@ -9,13 +8,14 @@ class Task extends Equatable {
   final DateTime? date;
   final int? color;
 
-  const Task._(
-      {required this.id,
-      required this.title,
-      required this.description,
-      required this.type,
-      required this.date,
-      required this.color});
+  const Task._({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.type,
+    required this.date,
+    required this.color,
+  });
 
   Task copyWith({
     int? id,
@@ -39,30 +39,32 @@ class Task extends Equatable {
   String toJson() => json.encode(toMap());
 
   factory Task.fromMap(Map<String, dynamic> json) => Task._(
-        id: json["id"] == null ? null : json["id"],
-        title: json["title"] == null ? null : json["title"],
-        description: json["description"] == null ? null : json["description"],
-        type: json["type"] == null ? null : json["type"],
+        id: json["id"],
+        title: json["title"],
+        description: json["description"],
+        type: json["type"],
         date: json["date"] == null ? null : DateTime.tryParse(json["date"]),
-        color: json["color"] == null ? null : json["color"],
+        color: json["color"],
       );
 
   Map<String, dynamic> toMap() => {
-        "id": id == null ? null : id,
-        "title": title == null ? null : title,
-        "description": description == null ? null : description,
-        "type": type == null ? null : type,
-        "date": date == null ? null : date,
-        "color": color == null ? null : color,
+        "id": id,
+        "title": title,
+        "description": description,
+        "type": type,
+        "date": date,
+        "color": color,
       };
 
-  static const empty = Task._(
-      id: 1,
-      title: "Do the dishes",
-      description: "Before go to maria's house.",
-      type: 1,
-      date: null,
-      color: 0);
+  static final empty = Task._(
+    id: 1,
+    title: "Do the dishes",
+    description: "Before go to maria's house.",
+    type: 1,
+    date: DateTime(0),
+    color: 0,
+  );
+
   @override
   List<Object?> get props => [id, title, description, type, date, color];
 }
