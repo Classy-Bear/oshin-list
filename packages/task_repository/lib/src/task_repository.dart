@@ -39,7 +39,7 @@ class TaskRepository implements TaskDataProvider {
 
     try {
       return Task.fromJson(response.body);
-    } catch (_) {
+    } on Exception {
       throw ServerError();
     }
   }

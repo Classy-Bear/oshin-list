@@ -16,7 +16,7 @@ class Task extends Equatable {
     required this.date,
     required this.color,
   });
-
+  
   Task copyWith({
     int? id,
     String? title,
