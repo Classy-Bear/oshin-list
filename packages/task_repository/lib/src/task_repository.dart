@@ -7,6 +7,8 @@ import 'package:task_repository/src/utils/global.dart';
 import 'package:task_repository/task_repository.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:meta/meta.dart';
+
 class TaskRepository implements TaskDataProvider {
   TaskRepository({
     http.Client? httpClient,
@@ -67,5 +69,10 @@ class TaskRepository implements TaskDataProvider {
     } catch (_) {
       throw ServerError();
     }
+  }
+
+  @required
+  void dispose() {
+    _httpClient.close();
   }
 }
