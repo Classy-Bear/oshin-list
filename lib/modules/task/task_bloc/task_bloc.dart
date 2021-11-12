@@ -12,14 +12,13 @@ import 'package:task_repository/task_repository.dart';
 ///   Future<void> updateTask();
 ///   Future<void> deleteTask():
 /// ```
-
 class TaskBloc extends Cubit<TaskState> {
-  /// provides all the function required to access and manipulate data[TaskBloc]
+  /// Provides all the function required to access and manipulate data[TaskBloc]
   final TaskDataProvider _taskRepository;
 
   TaskBloc(this._taskRepository) : super(TaskState.initialState());
 
-  /// fetch a list of type [Task] to the to the list.
+  /// Fetch a list of type [Task] to the to the list.
   Future<void> loadTasks() async {
     emit(state.copyWith(isLoading: true));
 
@@ -40,7 +39,7 @@ class TaskBloc extends Cubit<TaskState> {
     }
   }
 
-  /// adds a new task<Task>  to the list.
+  /// Adds a new [Task] to the list.
   Future<void> createTask(Task task) async {
     emit(state.copyWith(isLoading: true));
 
@@ -64,13 +63,14 @@ class TaskBloc extends Cubit<TaskState> {
     }
   }
 
-  // TODO: use the update function from the repository to update a task.
-  // update a task<Task> from the list.
+  // Updates a [Task] from the list.
   Future<void> updateTask(int id) async {
     emit(state.copyWith(isLoading: true));
 
     try {
+      // TODO: use the update function from the repository to update a task.
       // var updateTask =_taskRepository.update(id);
+
       emit(
         state.copyWith(
           isLoading: false,
