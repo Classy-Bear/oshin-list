@@ -87,27 +87,27 @@ class TaskBloc extends Cubit<TaskState> {
       );
     }
   }
+  // TODO:. finish this test
+  // Future<void> deleteTask(int id) async {
+  //   emit(state.copyWith(isLoading: true));
 
-  Future<void> delete(int id) async {
-    emit(state.copyWith(isLoading: true));
+  //   try {
+  //     await _taskRepository.delete(id);
 
-    try {
-      await _taskRepository.delete(id);
-
-      emit(
-        state.copyWith(
-          isLoading: false,
-          clearMessageError: true,
-          tasks: state.tasks.toList()..removeWhere((e) => e.id == id),
-        ),
-      );
-    } catch (error) {
-      emit(
-        state.copyWith(
-          isLoading: false,
-          errorMessage: 'unexpected error deleting.',
-        ),
-      );
-    }
-  }
+  //     emit(
+  //       state.copyWith(
+  //         isLoading: false,
+  //         clearMessageError: true,
+  //         tasks: state.tasks.toList()..removeWhere((e) => e.id == id),
+  //       ),
+  //     );
+  //   } catch (error) {
+  //     emit(
+  //       state.copyWith(
+  //         isLoading: false,
+  //         errorMessage: 'unexpected error deleting.',
+  //       ),
+  //     );
+  //   }
+  // }
 }
