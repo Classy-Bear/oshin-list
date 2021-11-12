@@ -1,7 +1,15 @@
 part of 'models.dart';
 
 class Task extends Equatable {
-  final int? id;
+  Task({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.type,
+    required this.date,
+    required this.color,
+  });
+  final String? id;
   final String? title;
   final String? description;
   final int? type;
@@ -16,9 +24,9 @@ class Task extends Equatable {
     required this.date,
     required this.color,
   });
-  
+
   Task copyWith({
-    int? id,
+    String? id,
     String? title,
     String? description,
     int? type,
@@ -57,7 +65,7 @@ class Task extends Equatable {
       };
 
   static final empty = Task._(
-    id: 1,
+    id: '1',
     title: "Do the dishes",
     description: "Before go to maria's house.",
     type: 1,

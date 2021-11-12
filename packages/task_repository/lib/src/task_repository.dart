@@ -31,12 +31,13 @@ class TaskRepository implements TaskDataProvider {
           "color": task.color,
         }),
       );
-    } catch (_) {
+    } catch (e) {
+      print(e);
       throw ServerError();
     }
 
     final statusCode = response.statusCode;
-    if (statusCode != HttpStatus.ok) throw ServerError();
+    if (statusCode != HttpStatus.created) throw ServerError();
 
     try {
       return Task.fromJson(response.body);
@@ -46,7 +47,7 @@ class TaskRepository implements TaskDataProvider {
   }
 
   @override
-  Future<void> delete(int id) async {
+  Future<void> delete(String id) async {
     late final http.Response response;
     try {
       response = await _httpClient.delete(Uri.parse(getOneTask(id)));
@@ -84,7 +85,7 @@ class TaskRepository implements TaskDataProvider {
   }
 
   @override
-  Future<Task> getOne(int id) async {
+  Future<Task> getOne(String id) async {
     late final http.Response response;
 
     try {
@@ -106,7 +107,7 @@ class TaskRepository implements TaskDataProvider {
     late final http.Response response;
     try {
       response = await _httpClient.put(Uri.parse(getOneTask(task.id)),
-          body: ({
+          body: json.encode({
             "title": task.title,
             "description": task.description,
             "type": task.type,
@@ -114,7 +115,8 @@ class TaskRepository implements TaskDataProvider {
             "date": task.date == null ? null : task.date!.toIso8601String(),
             "color": task.color,
           }));
-    } catch (_) {
+    } catch (e) {
+      print(e);
       throw ServerError();
     }
     final statusCode = response.statusCode;
