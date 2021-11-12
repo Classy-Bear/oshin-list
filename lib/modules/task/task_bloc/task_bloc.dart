@@ -6,18 +6,20 @@ import 'package:task_repository/task_repository.dart';
 /// you can get add, update and delete using its functions.
 ///
 /// functions of this object:
+/// ```
 ///   Future<void> loadTasks():
 ///   Future<void> createTask():
 ///   Future<void> updateTask();
 ///   Future<void> deleteTask():
+/// ```
 
 class TaskBloc extends Cubit<TaskState> {
-  // provides all the function required to access and manipulate data[TaskBloc]
+  /// provides all the function required to access and manipulate data[TaskBloc]
   final TaskDataProvider _taskRepository;
 
   TaskBloc(this._taskRepository) : super(TaskState.initialState());
 
-// fetch a list of type [Task] to the to the list.
+  /// fetch a list of type [Task] to the to the list.
   Future<void> loadTasks() async {
     emit(state.copyWith(isLoading: true));
 
@@ -33,15 +35,12 @@ class TaskBloc extends Cubit<TaskState> {
       );
     } catch (error) {
       emit(
-        state.copyWith(
-          errorMessage: 'unexpected error loading all task.',
-          tasks: [],
-        ),
+        state.copyWith(errorMessage: 'unexpected error loading all task.'),
       );
     }
   }
 
-  // adds a new task<Task>  to the list.
+  /// adds a new task<Task>  to the list.
   Future<void> createTask(Task task) async {
     emit(state.copyWith(isLoading: true));
 

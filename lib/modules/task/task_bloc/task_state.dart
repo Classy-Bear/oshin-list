@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:task_repository/task_repository.dart';
 
-
 /// [TaskState] define the [TaskBloc] state.
 /// represents how a list of tasks should be handled.
 @immutable
 class TaskState {
-  
   final List<Task> tasks;
   final String? errorMessage;
   final bool isLoading;
