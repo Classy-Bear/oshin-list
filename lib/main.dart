@@ -74,7 +74,9 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: SearchAppBar(
-          onTextChanged: (text) {},
+          onTextChanged: (text) {
+            debugPrint(text);
+          },
           title: 'Oshin Tasklist',
           searchInputPlaceHolder: 'search you task',
         ),
