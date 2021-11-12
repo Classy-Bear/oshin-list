@@ -61,7 +61,7 @@ class Task extends Equatable {
     title: "Do the dishes",
     description: "Before go to maria's house.",
     type: 1,
-    date: DateTime(0),
+    date: DateTime.now(),
     color: 0,
   );
 

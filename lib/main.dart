@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oshin_list/core/widgets/serch_app_bar/search_app_bar.dart';
+import 'package:oshin_list/core/widgets/task_tile/task_tile.dart';
+import 'package:task_repository/task_repository.dart';
 
 void main() {
   runApp(const MyApp());
@@ -103,11 +105,11 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             const Text(
               'You have pushed the button this many times:',
-            ),
-            Text(
+            ),            Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+
           ],
         ),
       ),
@@ -118,4 +120,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+
+  Task task = Task.empty;
 }
