@@ -45,7 +45,6 @@ class _SearchAppBarState extends State<SearchAppBar> {
     );
   }
 
-  //it's just a text field
   Widget appBarTitle() {
     return Text(
       widget.title,
