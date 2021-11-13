@@ -15,14 +15,19 @@ include: package:lints/recommended.yaml
 
 # Uncomment the following section to specify additional rules.
 
-# linter:
-#   rules:
-#     - camel_case_types
-
-# analyzer:
-#   exclude:
-#     - path/to/excluded/files/**
-
+linter:
+  rules:
+    - always_use_package_imports
+    - avoid_dynamic_calls
+    - avoid_empty_else
+    - avoid_print
+    - avoid_relative_lib_imports
+    - avoid_returning_null_for_future
+    - require_trailing_commas
+analyzer:
+  exclude: [test/**.g.dart, test/**.mocks.dart]
+  errors:
+    require_trailing_commas: error
 # For more information about the core and recommended set of lints, see
 # https://dart.dev/go/core-lints
 
