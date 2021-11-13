@@ -1,14 +1,6 @@
 part of 'models.dart';
 
 class Task extends Equatable {
-  Task({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.type,
-    required this.date,
-    required this.color,
-  });
   final String? id;
   final String? title;
   final String? description;
@@ -51,7 +43,7 @@ class Task extends Equatable {
         title: json["title"],
         description: json["description"],
         type: json["type"],
-        date: json["date"] == null ? null : DateTime.tryParse(json["date"]),
+        date: DateTime.tryParse(json["date"]),
         color: json["color"],
       );
 
