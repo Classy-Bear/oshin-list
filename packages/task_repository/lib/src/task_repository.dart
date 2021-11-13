@@ -1,12 +1,4 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:task_repository/src/utils/utils.dart';
-import 'package:task_repository/task_repository.dart';
-import 'package:http/http.dart' as http;
-
-import 'package:meta/meta.dart';
-import 'data_provider/data_provider.dart';
+part of '../task_repository.dart';
 
 class TaskRepository implements TaskDataProvider {
   TaskRepository({
@@ -62,7 +54,6 @@ class TaskRepository implements TaskDataProvider {
     try {
       response = await _httpClient.get(Uri.parse(apiUrl));
     } catch (e) {
-      print(e);
       throw ServerError();
     }
 
@@ -87,14 +78,16 @@ class TaskRepository implements TaskDataProvider {
     late final http.Response response;
     if (task.id == null) throw ServerError();
     try {
-      response = await _httpClient.put(Uri.parse('$apiUrl/${task.id}'),
-          body: json.encode({
-            "title": task.title,
-            "description": task.description,
-            "type": task.type,
-            "date": task.date?.toIso8601String(),
-            "color": task.color,
-          }));
+      response = await _httpClient.put(
+        Uri.parse('$apiUrl/${task.id}'),
+        body: json.encode({
+          "title": task.title,
+          "description": task.description,
+          "type": task.type,
+          "date": task.date?.toIso8601String(),
+          "color": task.color,
+        }),
+      );
     } catch (e) {
       throw ServerError();
     }
