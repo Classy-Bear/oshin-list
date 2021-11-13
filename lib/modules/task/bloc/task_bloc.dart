@@ -1,6 +1,4 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:oshin_list/modules/task/task_bloc/task_state.dart';
-import 'package:task_repository/task_repository.dart';
+part of 'bloc.dart';
 
 /// [TaskBloc]'s bloc in responsable for control the state of a list of type [Task],
 /// you can get add, update and delete using its functions.
@@ -16,7 +14,7 @@ class TaskBloc extends Cubit<TaskState> {
   /// Provides all the function required to access and manipulate data[TaskBloc]
   final TaskDataProvider _taskRepository;
 
-  TaskBloc(this._taskRepository) : super(TaskState.initialState());
+  TaskBloc(this._taskRepository) : super(const TaskState());
 
   /// Fetch a list of type [Task] to the to the list.
   Future<void> loadTasks() async {
@@ -63,18 +61,17 @@ class TaskBloc extends Cubit<TaskState> {
     }
   }
 
-  // Updates a [Task] from the list.
-  Future<void> updateTask(int id) async {
+  /// Updates a [Task] from the list.
+  Future<void> updateTask(Task task) async {
     emit(state.copyWith(isLoading: true));
 
     try {
-      // TODO: use the update function from the repository to update a task.
-      // var updateTask =_taskRepository.update(id);
+      var updateTask =_taskRepository.update(task);
 
       emit(
         state.copyWith(
           isLoading: false,
-          tasks: state.tasks.map<Task>((e) => e.id == id ? e : e).toList(),
+          tasks: state.tasks.map<Task>((e) => e.id == task.id ? e : e).toList(),
           clearMessageError: true,
         ),
       );
@@ -87,8 +84,9 @@ class TaskBloc extends Cubit<TaskState> {
       );
     }
   }
-
-  Future<void> delete(int id) async {
+  
+  /// Deletes a [Task] from the list.
+  Future<void> deleteTask(String id) async {
     emit(state.copyWith(isLoading: true));
 
     try {

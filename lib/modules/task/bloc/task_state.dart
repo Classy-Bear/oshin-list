@@ -1,26 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:task_repository/task_repository.dart';
+part of 'bloc.dart';
 
 /// [TaskState] define the [TaskBloc] state.
 /// represents how a list of tasks should be handled.
 @immutable
-class TaskState {
+class TaskState extends Equatable {
   final List<Task> tasks;
   final String? errorMessage;
   final bool isLoading;
 
   const TaskState({
-    required this.tasks,
+    this.tasks = const [],
     this.errorMessage,
-    required this.isLoading,
+    this.isLoading = false,
   });
 
-  factory TaskState.initialState() {
-    return const TaskState(
-      tasks: [],
-      isLoading: false,
-    );
-  }
+  @override
+  List<Object?> get props => [tasks, errorMessage, isLoading];
 
   TaskState copyWith({
     List<Task>? tasks,
