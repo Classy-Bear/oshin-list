@@ -1,4 +1,4 @@
-import 'package:oshin_list/modules/task/task_bloc/task_bloc.dart';
+import 'package:oshin_list/modules/task/bloc/bloc.dart';
 import 'package:task_repository/task_repository.dart';
 import 'package:mockito/annotations.dart';
 
@@ -9,5 +9,4 @@ import 'package:mockito/annotations.dart';
     TaskBloc, 
     TaskDataProvider,
 ])
-
 void main() {}

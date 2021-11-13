@@ -4,10 +4,9 @@
 
 import 'dart:async' as _i3;
 
-import 'package:flutter_bloc/flutter_bloc.dart' as _i6;
+import 'package:flutter_bloc/flutter_bloc.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:oshin_list/modules/task/task_bloc/task_bloc.dart' as _i5;
-import 'package:oshin_list/modules/task/task_bloc/task_state.dart' as _i2;
+import 'package:oshin_list/modules/task/bloc/bloc.dart' as _i2;
 import 'package:task_repository/task_repository.dart' as _i4;
 
 // ignore_for_file: avoid_redundant_argument_values
@@ -29,7 +28,7 @@ class _FakeTask_2 extends _i1.Fake implements _i4.Task {}
 /// A class which mocks [TaskBloc].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockTaskBloc extends _i1.Mock implements _i5.TaskBloc {
+class MockTaskBloc extends _i1.Mock implements _i2.TaskBloc {
   MockTaskBloc() {
     _i1.throwOnMissingStub(this);
   }
@@ -56,13 +55,13 @@ class MockTaskBloc extends _i1.Mock implements _i5.TaskBloc {
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future<void>.value()) as _i3.Future<void>);
   @override
-  _i3.Future<void> updateTask(int? id) =>
-      (super.noSuchMethod(Invocation.method(#updateTask, [id]),
+  _i3.Future<void> updateTask(_i4.Task? task) =>
+      (super.noSuchMethod(Invocation.method(#updateTask, [task]),
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future<void>.value()) as _i3.Future<void>);
   @override
-  _i3.Future<void> delete(int? id) =>
-      (super.noSuchMethod(Invocation.method(#delete, [id]),
+  _i3.Future<void> deleteTask(String? id) =>
+      (super.noSuchMethod(Invocation.method(#deleteTask, [id]),
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future<void>.value()) as _i3.Future<void>);
   @override
@@ -86,7 +85,7 @@ class MockTaskBloc extends _i1.Mock implements _i5.TaskBloc {
       super.noSuchMethod(Invocation.method(#emit, [state]),
           returnValueForMissingStub: null);
   @override
-  void onChange(_i6.Change<_i2.TaskState>? change) =>
+  void onChange(_i5.Change<_i2.TaskState>? change) =>
       super.noSuchMethod(Invocation.method(#onChange, [change]),
           returnValueForMissingStub: null);
   @override
@@ -119,13 +118,18 @@ class MockTaskDataProvider extends _i1.Mock implements _i4.TaskDataProvider {
               returnValue: Future<List<_i4.Task>>.value(<_i4.Task>[]))
           as _i3.Future<List<_i4.Task>>);
   @override
-  _i3.Future<void> delete(int? id) =>
+  _i3.Future<void> delete(String? id) =>
       (super.noSuchMethod(Invocation.method(#delete, [id]),
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future<void>.value()) as _i3.Future<void>);
   @override
   _i3.Future<_i4.Task> create(_i4.Task? task) =>
       (super.noSuchMethod(Invocation.method(#create, [task]),
+              returnValue: Future<_i4.Task>.value(_FakeTask_2()))
+          as _i3.Future<_i4.Task>);
+  @override
+  _i3.Future<_i4.Task> update(_i4.Task? task) =>
+      (super.noSuchMethod(Invocation.method(#update, [task]),
               returnValue: Future<_i4.Task>.value(_FakeTask_2()))
           as _i3.Future<_i4.Task>);
   @override
