@@ -1,12 +1,4 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:task_repository/src/utils/exceptions.dart';
-import 'package:task_repository/src/utils/global.dart';
-import 'package:task_repository/task_repository.dart';
-import 'package:http/http.dart' as http;
-
-import 'data_provider/data_provider.dart';
+part of '../task_repository.dart';
 
 class TaskRepository implements TaskDataProvider {
   TaskRepository({
@@ -20,22 +12,21 @@ class TaskRepository implements TaskDataProvider {
     late final http.Response response;
     try {
       response = await _httpClient.post(
-        Uri.parse(apiTask),
+        Uri.parse(apiUrl),
         body: json.encode({
           "title": task.title,
           "description": task.description,
           "type": task.type,
-          // TODO: Don't use the bang(!) operator.
-          "date": task.date!.toIso8601String(),
+          "date": task.date?.toIso8601String(),
           "color": task.color,
         }),
       );
-    } catch (_) {
+    } catch (e) {
       throw ServerError();
     }
 
     final statusCode = response.statusCode;
-    if (statusCode != HttpStatus.ok) throw ServerError();
+    if (statusCode != HttpStatus.created) throw ServerError();
 
     try {
       return Task.fromJson(response.body);
@@ -45,10 +36,10 @@ class TaskRepository implements TaskDataProvider {
   }
 
   @override
-  Future<void> delete(int id) async {
+  Future<void> delete(String id) async {
     late final http.Response response;
     try {
-      response = await _httpClient.delete(Uri.parse(deleteTask(id)));
+      response = await _httpClient.delete(Uri.parse('$apiUrl/$id'));
     } catch (e) {
       throw ServerError();
     }
@@ -61,7 +52,7 @@ class TaskRepository implements TaskDataProvider {
   Future<List<Task>> getAll() async {
     late final http.Response response;
     try {
-      response = await _httpClient.get(Uri.parse(apiTask));
+      response = await _httpClient.get(Uri.parse(apiUrl));
     } catch (e) {
       throw ServerError();
     }
@@ -70,11 +61,48 @@ class TaskRepository implements TaskDataProvider {
     if (statusCode != HttpStatus.ok) throw ServerError();
 
     try {
-      // TODO: Get a all the task, not just one.
-      // return Task.fromJson(response.body);
-      throw UnimplementedError();
+      final tasks = <Task>[];
+      final body = json.decode(response.body) as Map<String, dynamic>;
+      final data = body['data'] as List;
+      for (var element in data) {
+        tasks.add(Task.fromMap(element));
+      }
+      return tasks;
     } on Exception {
       throw ServerError();
     }
+  }
+
+  @override
+  Future<Task> update(Task task) async {
+    late final http.Response response;
+    if (task.id == null) throw ServerError();
+    try {
+      response = await _httpClient.put(
+        Uri.parse('$apiUrl/${task.id}'),
+        body: json.encode({
+          "title": task.title,
+          "description": task.description,
+          "type": task.type,
+          "date": task.date?.toIso8601String(),
+          "color": task.color,
+        }),
+      );
+    } catch (e) {
+      throw ServerError();
+    }
+    final statusCode = response.statusCode;
+    if (statusCode != HttpStatus.ok) throw ServerError();
+
+    try {
+      return Task.fromJson(response.body);
+    } on Exception {
+      throw ServerError();
+    }
+  }
+
+  @required
+  void dispose() {
+    _httpClient.close();
   }
 }
