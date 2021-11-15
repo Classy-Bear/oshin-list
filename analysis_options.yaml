@@ -22,4 +22,4 @@ analyzer:
     avoid_returning_null_for_future: error
     require_trailing_commas: error
     directives_ordering: warning
-    lines_longer_than_80_chars: error
+    lines_longer_than_80_chars: warning

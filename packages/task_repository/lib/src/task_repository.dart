@@ -72,25 +72,25 @@ class TaskRepository implements TaskDataProvider {
     if (task.id == null) throw ServerError();
     try {
       final body = <String, dynamic>{};
-      if(task.id != null) {
+      if (task.id != null) {
         body['id'] = task.id;
       }
-      if(task.title != null) {
+      if (task.title != null) {
         body['title'] = task.title;
       }
-      if(task.description != null) {
+      if (task.description != null) {
         body['description'] = task.description;
       }
-      if(task.type != null) {
+      if (task.type != null) {
         body['type'] = task.type;
       }
-      if(task.date != null) {
+      if (task.date != null) {
         body['date'] = task.date!.toIso8601String();
       }
-      if(task.color != null) {
+      if (task.color != null) {
         body['color'] = task.color;
       }
-      if(task.completed != null) {
+      if (task.completed != null) {
         body['completed'] = task.completed;
       }
       response = await _httpClient.put(

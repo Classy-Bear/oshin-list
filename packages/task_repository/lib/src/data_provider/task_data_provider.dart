@@ -8,13 +8,13 @@ abstract class TaskDataProvider {
   Future<void> delete(String id);
 
   /// Returns the created [Task].
-  /// 
+  ///
   /// The API may alter some parameters from [task] and return a new [Task] from
   /// it.
   Future<Task> create(Task task);
 
   /// Returns the updated [Task].
-  /// 
+  ///
   /// The API may alter some parameters from [task] and return a new [Task] from
   /// it.
   Future<Task> update(Task task);

@@ -10,9 +10,7 @@ import 'mocks.mocks.dart';
 
 /// Generate files with this command:
 /// flutter packages pub run build_runner build --delete-conflicting-outputs
-@GenerateMocks([
-  TaskDataProvider
-])
+@GenerateMocks([TaskDataProvider])
 void main() {
   group(' Test $TaskBloc functionalities.', () {
     final taskDataProvider = MockTaskDataProvider();

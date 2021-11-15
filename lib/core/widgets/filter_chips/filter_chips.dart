@@ -5,7 +5,7 @@ class FilterChipsRow extends StatefulWidget {
   final Function(List<String>) onFilterSelect;
 
   /// Creates a list of [Chip]s based on a list of filters.
-  /// 
+  ///
   /// Selected filters are returned in the [onFilterSelect]
   const FilterChipsRow({
     Key? key,

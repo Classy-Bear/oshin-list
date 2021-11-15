@@ -6,7 +6,7 @@ class SearchAppBar extends StatefulWidget {
   final String? searchInputPlaceHolder;
 
   /// Creates an AppBar with a search functionality.
-  /// 
+  ///
   /// **Note**: It's necesary to call it inside of a [PreferredSize] widget.
   const SearchAppBar({
     Key? key,
