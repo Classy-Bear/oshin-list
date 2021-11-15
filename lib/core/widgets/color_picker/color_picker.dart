@@ -32,13 +32,16 @@ class _ColorPickerState extends State<ColorPicker> {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: GridView.count(
-                crossAxisCount: 4,
-                mainAxisSpacing: 3,
-                crossAxisSpacing: 3,
-                children: _colorsToTiles())));
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GridView.count(
+          crossAxisCount: 4,
+          mainAxisSpacing: 3,
+          crossAxisSpacing: 3,
+          children: _colorsToTiles(),
+        ),
+      ),
+    );
   }
 
   List<_ColorTile> _colorsToTiles() {

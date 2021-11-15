@@ -1,0 +1,45 @@
+part of 'models.dart';
+
+class TaskList extends Equatable {
+  final List<Task> _tasks;
+
+  const TaskList._({
+    List<Task>? tasks,
+  }) : _tasks = tasks ?? const [];
+
+  factory TaskList.fromJson(List tasks) =>
+      TaskList._(tasks: tasks.map((json) => Task.fromJson(json)).toList());
+
+  String toJson() => json.encode(_tasks.map((task) => task.toJson()).toList());
+
+  TaskList add({required Task task}) => TaskList._(tasks: [..._tasks, task]);
+
+  TaskList replaceWhere({
+    required Task task,
+    required bool Function(Task) where,
+  }) {
+    final index = _tasks.indexWhere(where);
+    if (index == -1) {
+      return this;
+    } else {
+      final tasks = TaskList._(tasks: _tasks);
+      tasks._tasks[index] = task;
+      return tasks;
+    }
+  }
+
+  TaskList removeWhere({required bool Function(Task) where}) {
+    return TaskList._(tasks: _tasks..removeWhere(where));
+  }
+
+  Task elementAt({required int id}) {
+    return _tasks.elementAt(id);
+  }
+
+  static final one = TaskList._(tasks: [Task.empty]);
+
+  static const empty = TaskList._(tasks: []);
+
+  @override
+  List<Object?> get props => [_tasks];
+}
