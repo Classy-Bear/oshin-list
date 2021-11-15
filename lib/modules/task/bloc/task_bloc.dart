@@ -1,6 +1,6 @@
 part of 'bloc.dart';
 
-/// [TaskBloc]'s bloc in responsable for control the state of a list of type [Task],
+/// [TaskBloc]'s bloc in responsable for control the state of a [TaskList],
 /// you can get add, update and delete using its functions.
 ///
 /// functions of this object:
@@ -11,101 +11,59 @@ part of 'bloc.dart';
 ///   Future<void> deleteTask():
 /// ```
 class TaskBloc extends Cubit<TaskState> {
-  /// Provides all the function required to access and manipulate data[TaskBloc]
+  /// Provides all the functionality required to access and manipulate [Task]'s
+  /// data.
   final TaskDataProvider _taskRepository;
 
   TaskBloc(this._taskRepository) : super(const TaskState());
 
   /// Fetch a list of type [Task] to the to the list.
-  Future<void> loadTasks() async {
-    emit(state.copyWith(isLoading: true));
-
+  Future<void> getAll() async {
+    emit(state.copyWith(status: FetchStatus.loading));
     try {
-      List<Task> tasks = await _taskRepository.getAll();
-
-      emit(
-        state.copyWith(
-          tasks: tasks,
-          isLoading: false,
-          clearMessageError: true,
-        ),
-      );
-    } catch (error) {
-      emit(
-        state.copyWith(errorMessage: 'unexpected error loading all task.'),
-      );
+      TaskList tasks = await _taskRepository.getAll();
+      emit(state.copyWith(tasks: tasks, status: FetchStatus.success));
+    } on Exception {
+      emit(state.copyWith(status: FetchStatus.failure));
     }
   }
 
   /// Adds a new [Task] to the list.
-  Future<void> createTask(Task task) async {
-    emit(state.copyWith(isLoading: true));
-
+  Future<void> create(Task task) async {
+    emit(state.copyWith(status: FetchStatus.loading));
     try {
-      var newTask = await _taskRepository.create(task);
-
-      emit(
-        state.copyWith(
-          isLoading: false,
-          tasks: [newTask, ...state.tasks],
-          clearMessageError: true,
-        ),
-      );
+      final newTask = await _taskRepository.create(task);
+      final newTaskList = state.tasks.add(task: newTask);
+      emit(state.copyWith(tasks: newTaskList, status: FetchStatus.success));
     } catch (error) {
-      emit(
-        state.copyWith(
-          isLoading: false,
-          errorMessage: "Unexpected error creating.",
-        ),
-      );
+      emit(state.copyWith(status: FetchStatus.failure));
     }
   }
 
   /// Updates a [Task] from the list.
-  Future<void> updateTask(Task task) async {
-    emit(state.copyWith(isLoading: true));
-
+  Future<void> update(Task task) async {
+    emit(state.copyWith(status: FetchStatus.loading));
     try {
-      var updateTask =_taskRepository.update(task);
-
-      emit(
-        state.copyWith(
-          isLoading: false,
-          tasks: state.tasks.map<Task>((e) => e.id == task.id ? e : e).toList(),
-          clearMessageError: true,
-        ),
-      );
+      final newTask = await _taskRepository.update(task);
+      final newTaskList = state.tasks
+          .replaceWhere(task: newTask, where: (task) => task.id == newTask.id);
+      emit(state.copyWith(tasks: newTaskList, status: FetchStatus.success));
     } catch (error) {
-      emit(
-        state.copyWith(
-          isLoading: false,
-          errorMessage: 'unexpected error updating.',
-        ),
-      );
+      emit(state.copyWith(status: FetchStatus.failure));
     }
   }
-  
-  /// Deletes a [Task] from the list.
-  Future<void> deleteTask(String id) async {
-    emit(state.copyWith(isLoading: true));
 
+  /// Deletes a [Task] from the list.
+  Future<void> delete(String id) async {
+    emit(state.copyWith(status: FetchStatus.loading));
     try {
       await _taskRepository.delete(id);
-
-      emit(
-        state.copyWith(
-          isLoading: false,
-          clearMessageError: true,
-          tasks: state.tasks.toList()..removeWhere((e) => e.id == id),
-        ),
+      final newTaskList = state.tasks.removeWhere(
+        where: (task) => task.id == id,
       );
+      emit(state.copyWith(tasks: newTaskList, status: FetchStatus.success));
     } catch (error) {
-      emit(
-        state.copyWith(
-          isLoading: false,
-          errorMessage: 'unexpected error deleting.',
-        ),
-      );
+      emit(state.copyWith(status: FetchStatus.failure));
     }
   }
 }

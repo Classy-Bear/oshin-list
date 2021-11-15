@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 
 /// Watch all changes and errors of any [Bloc].
 ///
-/// Note: This is for debugging purposes only.
+/// __Note__: This is for debugging purposes only.
 class AppBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object? event) {

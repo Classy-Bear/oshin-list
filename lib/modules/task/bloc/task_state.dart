@@ -1,32 +1,25 @@
 part of 'bloc.dart';
 
 /// [TaskState] define the [TaskBloc] state.
-/// represents how a list of tasks should be handled.
-@immutable
+/// Represents how a list of tasks should be handled.
 class TaskState extends Equatable {
-  final List<Task> tasks;
-  final String? errorMessage;
-  final bool isLoading;
+  final TaskList tasks;
+  final FetchStatus status;
 
   const TaskState({
-    this.tasks = const [],
-    this.errorMessage,
-    this.isLoading = false,
+    this.status = FetchStatus.initial,
+    this.tasks = TaskList.empty,
   });
 
   @override
-  List<Object?> get props => [tasks, errorMessage, isLoading];
+  List<Object?> get props => [tasks, status];
 
   TaskState copyWith({
-    List<Task>? tasks,
-    String? errorMessage,
-    bool clearMessageError = false,
-    bool? isLoading,
+    TaskList? tasks,
+    FetchStatus? status,
   }) =>
       TaskState(
+        status: status ?? this.status,
         tasks: tasks ?? this.tasks,
-        errorMessage:
-            clearMessageError ? null : errorMessage ?? this.errorMessage,
-        isLoading: isLoading ?? this.isLoading,
       );
 }

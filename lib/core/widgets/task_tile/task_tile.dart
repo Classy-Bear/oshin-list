@@ -64,8 +64,10 @@ class TaskTile extends StatelessWidget {
           textColor: Color(task.color!),
 
           subtitle: Text(
-              'Date due : ${task.date?.day}-${task.date?.month}-${task.date?.year}'),
-          //don't wanna nothing in trailing, but need the layout working fine. so a transparent icon is a good solution ;)
+            'Date due : ${task.date?.day}-${task.date?.month}-${task.date?.year}',
+          ),
+          //don't wanna nothing in trailing, but need the layout working fine.
+          // so a transparent icon is a good solution ;)
           trailing: const Icon(
             Icons.remove,
             color: Colors.transparent,
@@ -73,9 +75,10 @@ class TaskTile extends StatelessWidget {
           children: [
             Column(
               children: [
-                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                  child: Text(task.description??''),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                  child: Text(task.description ?? ''),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,

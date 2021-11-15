@@ -3,22 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:task_repository/task_repository.dart';
 
 class TasksGraphics extends StatefulWidget {
-
   final List<Task> tasks;
 
-  const TasksGraphics({ 
+  const TasksGraphics({
     Key? key,
-    required this.tasks, 
-    }) : super(key: key);
+    required this.tasks,
+  }) : super(key: key);
 
   @override
   _TasksGraphicsState createState() => _TasksGraphicsState();
 }
 
 class _TasksGraphicsState extends State<TasksGraphics> {
-
   ChartType selectedChart = ChartType.pie;
-  int pendingCount = 0, overdueCount = 0,completedCount = 0;
+  int pendingCount = 0, overdueCount = 0, completedCount = 0;
 
   @override
   void initState() {
@@ -38,19 +36,19 @@ class _TasksGraphicsState extends State<TasksGraphics> {
           child: Container(
             width: 320,
             height: 320,
-            child: selectedChart == ChartType.pie? 
-            _PieGraphics()
-            :(selectedChart == ChartType.bar)?
-            _BarsGraphic()
-            :(selectedChart == ChartType.radar)?
-            _RadarGraphic()
-            :_PieGraphics(),
+            child: selectedChart == ChartType.pie
+                ? _PieGraphics()
+                : (selectedChart == ChartType.bar)
+                    ? _BarsGraphic()
+                    : (selectedChart == ChartType.radar)
+                        ? _RadarGraphic()
+                        : _PieGraphics(),
           ),
         ),
         Expanded(
           flex: 1,
           child: _GraphicsSelector(
-            onSelectionChanged: (selection){
+            onSelectionChanged: (selection) {
               setState(() {
                 selectedChart = selection;
               });
@@ -61,20 +59,16 @@ class _TasksGraphicsState extends State<TasksGraphics> {
     );
   }
 
-  void gtg(){
+  void gtg() {
+    int pending = 0, overdue = 0, completed = 0;
 
-    int pending = 0, overdue = 0,completed = 0;
-
-    widget.tasks.forEach((task) { 
-
-      if (task.isPending){
-        pending +=1;
-
-      }else if (task.isOverdue){
-        overdue +=1;
-
-      }else if (task.completed!){
-        completed +=1;
+    widget.tasks.forEach((task) {
+      if (task.isPending) {
+        pending += 1;
+      } else if (task.isOverdue) {
+        overdue += 1;
+      } else if (task.completed!) {
+        completed += 1;
       }
     });
 
@@ -83,58 +77,59 @@ class _TasksGraphicsState extends State<TasksGraphics> {
       overdueCount = overdue;
       completedCount = completed;
     });
-
-    print(pendingCount);
-    print(overdueCount);
-    print(completedCount);
   }
 }
 
 class _GraphicsSelector extends StatefulWidget {
-
-
   final Function(ChartType) onSelectionChanged;
 
-  _GraphicsSelector({
-    Key? key,
-    required this.onSelectionChanged
-    }) : super(key: key);
+  _GraphicsSelector({Key? key, required this.onSelectionChanged})
+      : super(key: key);
 
   @override
   __GraphicsSelectorState createState() => __GraphicsSelectorState();
 }
 
 class __GraphicsSelectorState extends State<_GraphicsSelector> {
-
   ChartType currentSelectedGraphic = ChartType.pie;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment:MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
-          onPressed: ()=>updateSelection(ChartType.bar),
+          onPressed: () => updateSelection(ChartType.bar),
           icon: const Icon(Icons.bar_chart),
-          color: currentSelectedGraphic == ChartType.bar? Colors.blue.shade700 : Colors.grey.shade500,
+          color: currentSelectedGraphic == ChartType.bar
+              ? Colors.blue.shade700
+              : Colors.grey.shade500,
         ),
-        const SizedBox(height: 30,),
-        IconButton(
-          onPressed: ()=>updateSelection(ChartType.pie),
-          icon: const Icon(Icons.pie_chart) ,
-          color: currentSelectedGraphic == ChartType.pie? Colors.blue.shade700 : Colors.grey.shade500,
+        const SizedBox(
+          height: 30,
         ),
-        const SizedBox(height: 30,),
         IconButton(
-          onPressed: ()=>updateSelection(ChartType.radar),
-          icon: const Icon(Icons.radar) ,
-          color: currentSelectedGraphic == ChartType.radar? Colors.blue.shade700 : Colors.grey.shade500,
+          onPressed: () => updateSelection(ChartType.pie),
+          icon: const Icon(Icons.pie_chart),
+          color: currentSelectedGraphic == ChartType.pie
+              ? Colors.blue.shade700
+              : Colors.grey.shade500,
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+        IconButton(
+          onPressed: () => updateSelection(ChartType.radar),
+          icon: const Icon(Icons.radar),
+          color: currentSelectedGraphic == ChartType.radar
+              ? Colors.blue.shade700
+              : Colors.grey.shade500,
         )
       ],
     );
   }
 
-  updateSelection(ChartType selected){
+  updateSelection(ChartType selected) {
     setState(() {
       currentSelectedGraphic = selected;
     });
@@ -144,23 +139,22 @@ class __GraphicsSelectorState extends State<_GraphicsSelector> {
 }
 
 class _PieGraphics extends StatelessWidget {
+  _PieGraphics({Key? key}) : super(key: key);
 
-_PieGraphics({Key? key}) : super(key: key);
-
-    PieChartData pieData = PieChartData(
+  PieChartData pieData = PieChartData(
     sections: [
       PieChartSectionData(
         title: '20%',
-        value:20,
-     ),
+        value: 20,
+      ),
       PieChartSectionData(
         title: '70%',
-        value:70,
-     ),
+        value: 70,
+      ),
       PieChartSectionData(
         title: '10%',
-        value:10,
-     ),
+        value: 10,
+      ),
     ],
   );
 
@@ -171,10 +165,9 @@ _PieGraphics({Key? key}) : super(key: key);
 }
 
 class _BarsGraphic extends StatelessWidget {
+  _BarsGraphic({Key? key}) : super(key: key);
 
-   _BarsGraphic({ Key? key }) : super(key: key);
-
-   BarChartData barData = BarChartData(
+  BarChartData barData = BarChartData(
     alignment: BarChartAlignment.center,
     groupsSpace: 70,
     gridData: FlGridData(
@@ -197,22 +190,20 @@ class _BarsGraphic extends StatelessWidget {
       bottomTitles: SideTitles(
         showTitles: true,
         reservedSize: 10,
-        getTitles: (double num){
+        getTitles: (double num) {
           switch (num.toInt()) {
             case 1:
-                return 'Done';
+              return 'Done';
             case 2:
               return 'Pending';
-            case 3: 
+            case 3:
               return 'Overdue';
             default:
               return '';
           }
         },
       ),
-      
     ),
-
     barGroups: [
       BarChartGroupData(
         x: 1,
@@ -220,12 +211,12 @@ class _BarsGraphic extends StatelessWidget {
           BarChartRodData(
             y: 7,
             width: 25,
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(0),
               bottomRight: Radius.circular(0),
               topLeft: Radius.circular(7),
-              topRight: Radius.circular(7)
-            )
+              topRight: Radius.circular(7),
+            ),
           )
         ],
       ),
@@ -235,12 +226,12 @@ class _BarsGraphic extends StatelessWidget {
           BarChartRodData(
             y: 4,
             width: 25,
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(0),
               bottomRight: Radius.circular(0),
               topLeft: Radius.circular(7),
-              topRight: Radius.circular(7)
-            )
+              topRight: Radius.circular(7),
+            ),
           )
         ],
       ),
@@ -250,16 +241,16 @@ class _BarsGraphic extends StatelessWidget {
           BarChartRodData(
             y: 3,
             width: 25,
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(0),
               bottomRight: Radius.circular(0),
               topLeft: Radius.circular(7),
-              topRight: Radius.circular(7)
-            )
+              topRight: Radius.circular(7),
+            ),
           )
         ],
       ),
-    ]
+    ],
   );
 
   @override
@@ -272,14 +263,13 @@ class _BarsGraphic extends StatelessWidget {
 }
 
 class _RadarGraphic extends StatelessWidget {
-  
-   _RadarGraphic({Key? key}) : super(key: key);
+  _RadarGraphic({Key? key}) : super(key: key);
 
   RadarChartData radarData = RadarChartData(
-    getTitle:(int num){
-      switch(num){
+    getTitle: (int num) {
+      switch (num) {
         case 0:
-         return 'Done';
+          return 'Done';
         case 1:
           return 'Pending';
         case 2:
@@ -287,31 +277,29 @@ class _RadarGraphic extends StatelessWidget {
         default:
           return '';
       }
-    } ,
+    },
     radarBorderData: const BorderSide(
       color: Colors.transparent,
     ),
     tickBorderData: const BorderSide(
       color: Colors.transparent,
     ),
-    gridBorderData:  BorderSide(
+    gridBorderData: BorderSide(
       color: Colors.blue.withOpacity(0.7),
     ),
     borderData: FlBorderData(
       show: false,
     ),
-    ticksTextStyle: TextStyle(color: Colors.transparent),
-
+    ticksTextStyle: const TextStyle(color: Colors.transparent),
     dataSets: [
       RadarDataSet(
-
         dataEntries: [
-          const RadarEntry(value:4),
-          const RadarEntry(value:7),
-          const RadarEntry(value:3),
-        ]
+          const RadarEntry(value: 4),
+          const RadarEntry(value: 7),
+          const RadarEntry(value: 3),
+        ],
       ),
-    ]
+    ],
   );
 
   @override
@@ -322,8 +310,4 @@ class _RadarGraphic extends StatelessWidget {
   }
 }
 
-enum ChartType {
-  bar,
-  pie,
-  radar
-}
+enum ChartType { bar, pie, radar }
