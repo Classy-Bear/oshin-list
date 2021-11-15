@@ -15,7 +15,10 @@ class TaskBloc extends Cubit<TaskState> {
   /// data.
   final TaskDataProvider _taskRepository;
 
-  TaskBloc(this._taskRepository) : super(const TaskState());
+  TaskBloc({
+    TaskDataProvider? taskRepository,
+  })  : _taskRepository = taskRepository ?? TaskRepository(),
+        super(const TaskState());
 
   /// Fetch a list of type [Task] to the to the list.
   Future<void> getAll() async {

@@ -18,6 +18,7 @@ class TaskTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final date = "${task.date?.day}-${task.date?.month}-${task.date?.year}";
     return Dismissible(
       key: const Key('dimiss'),
       background: Container(
@@ -62,12 +63,9 @@ class TaskTile extends StatelessWidget {
           ),
           title: Text(task.title ?? ''),
           textColor: Color(task.color!),
-
           subtitle: Text(
-            'Date due : ${task.date?.day}-${task.date?.month}-${task.date?.year}',
+            'Date due: $date',
           ),
-          //don't wanna nothing in trailing, but need the layout working fine.
-          // so a transparent icon is a good solution ;)
           trailing: const Icon(
             Icons.remove,
             color: Colors.transparent,
@@ -89,7 +87,6 @@ class TaskTile extends StatelessWidget {
                         color: Colors.red,
                       ),
                       onPressed: () {
-                        //looking for auto-drag solution
                         onDelete(task);
                       },
                     ),
@@ -99,7 +96,6 @@ class TaskTile extends StatelessWidget {
                         color: Colors.green,
                       ),
                       onPressed: () {
-                        //looking for an auto-drag solution
                         onDone(task);
                       },
                     ),
@@ -113,15 +109,3 @@ class TaskTile extends StatelessWidget {
     );
   }
 }
-
-// class TaskTileList extends StatelessWidget {
-//   List<Task> taskList;
-
-//   const TaskTileList(
-//     {Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container();
-//   }
-// }

@@ -5,5 +5,5 @@ import 'package:oshin_list/bloc_observer.dart';
 
 void main() {
   Bloc.observer = AppBlocObserver();
-  runApp(const MyApp());
+  runApp(const AppPage());
 }
