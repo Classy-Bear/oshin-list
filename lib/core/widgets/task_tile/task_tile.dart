@@ -21,14 +21,32 @@ class TaskTile extends StatelessWidget {
     return Dismissible(
       key: const Key('dimiss'),
       background: Container(
+        alignment: Alignment.centerLeft,
         width: double.infinity,
         height: double.infinity,
         color: Colors.red,
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 30),
+          child: Icon(
+            Icons.cancel,
+            size: 30,
+            color: Colors.white,
+          ),
+        ),
       ),
       secondaryBackground: Container(
+        alignment: Alignment.centerRight,
         width: double.infinity,
         height: double.infinity,
-        color: Colors.green,
+        color: Color(task.color!),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 30),
+          child: Icon(
+            Icons.check,
+            size: 30,
+            color: Colors.white,
+          ),
+        ),
       ),
       child: GestureDetector(
         onLongPress: () {
@@ -44,6 +62,7 @@ class TaskTile extends StatelessWidget {
           ),
           title: Text(task.title ?? ''),
           textColor: Color(task.color!),
+
           subtitle: Text(
               'Date due : ${task.date?.day}-${task.date?.month}-${task.date?.year}'),
           //don't wanna nothing in trailing, but need the layout working fine. so a transparent icon is a good solution ;)
@@ -54,10 +73,9 @@ class TaskTile extends StatelessWidget {
           children: [
             Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                  child: Text(
-                      'oiewfn wefweo nf fwoiuefew oqwoewn ofn fwnqfonew nf enofn oewno nfwqofnwf wonfon fewff noeqnfininfw o nfwioewqee nfq f feijnowqf o'),
+                 Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                  child: Text(task.description??''),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -92,3 +110,15 @@ class TaskTile extends StatelessWidget {
     );
   }
 }
+
+// class TaskTileList extends StatelessWidget {
+//   List<Task> taskList;
+
+//   const TaskTileList(
+//     {Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container();
+//   }
+// }
