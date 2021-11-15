@@ -1,5 +1,4 @@
-/// El path para crear y obtener tasks.
-const apiTask = "https://618c209fded7fb0017bb942a.mockapi.io/task";
+part of 'utils.dart';
 
-/// El path para eliminar un task mediante el [id].
-String deleteTask(int id) => "$apiTask/$id";
+/// El path para crear y obtener tasks.
+const apiUrl = "https://618c209fded7fb0017bb942a.mockapi.io/task";

@@ -5,8 +5,11 @@ abstract class TaskDataProvider {
   Future<List<Task>> getAll();
 
   /// Deletes a [Task] by its [id].
-  Future<void> delete(int id);
+  Future<void> delete(String id);
 
-  /// Creates a new [Task].
+  /// Creates a copy of [task] and returns the created one from the API.
   Future<Task> create(Task task);
+
+  /// Creates a copy of [task] and returns the updated one from the API.
+  Future<Task> update(Task task);
 }
