@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 part of '../task_repository.dart';
 
 class TaskRepository implements TaskDataProvider {

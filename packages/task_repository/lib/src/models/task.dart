@@ -8,7 +8,7 @@ class Task extends Equatable {
   final DateTime? date;
   final int? color;
   final bool? completed;
-
+  
   bool get isPending => (completed == false && DateTime.now().isBefore(date!));
   bool get isOverdue => (completed == false && DateTime.now().isAfter(date!));
 
