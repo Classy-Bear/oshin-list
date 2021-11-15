@@ -20,7 +20,6 @@ class _TasksGraphicsState extends State<TasksGraphics> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     gtg();
   }
@@ -29,7 +28,7 @@ class _TasksGraphicsState extends State<TasksGraphics> {
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
           flex: 9,
@@ -37,12 +36,24 @@ class _TasksGraphicsState extends State<TasksGraphics> {
             width: 320,
             height: 320,
             child: selectedChart == ChartType.pie
-                ? _PieGraphics()
+                ? _PieGraphics(
+                    done: completedCount,
+                    overdue: overdueCount,
+                    pending: pendingCount,
+                  )
                 : (selectedChart == ChartType.bar)
-                    ? _BarsGraphic()
+                    ? _BarsGraphic(
+                        done: completedCount,
+                        pending: pendingCount,
+                        overdue: overdueCount,
+                      )
                     : (selectedChart == ChartType.radar)
-                        ? _RadarGraphic()
-                        : _PieGraphics(),
+                        ? _RadarGraphic(
+                            done: completedCount,
+                            pending: pendingCount,
+                            overdue: overdueCount,
+                          )
+                        : Container(),
           ),
         ),
         Expanded(
@@ -96,7 +107,8 @@ class __GraphicsSelectorState extends State<_GraphicsSelector> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisSize: MainAxisSize.min,
       children: [
         IconButton(
           onPressed: () => updateSelection(ChartType.bar),
@@ -138,174 +150,301 @@ class __GraphicsSelectorState extends State<_GraphicsSelector> {
   }
 }
 
-class _PieGraphics extends StatelessWidget {
-  _PieGraphics({Key? key}) : super(key: key);
+class _PieGraphics extends StatefulWidget {
+  final int pending;
+  final int overdue;
+  final int done;
 
-  PieChartData pieData = PieChartData(
-    sections: [
-      PieChartSectionData(
-        title: '20%',
-        value: 20,
-      ),
-      PieChartSectionData(
-        title: '70%',
-        value: 70,
-      ),
-      PieChartSectionData(
-        title: '10%',
-        value: 10,
-      ),
-    ],
-  );
+  _PieGraphics({
+    Key? key,
+    required this.pending,
+    required this.overdue,
+    required this.done,
+  }) : super(key: key);
+
+  @override
+  State<_PieGraphics> createState() => _PieGraphicsState();
+}
+
+class _PieGraphicsState extends State<_PieGraphics> {
+  late double donePercentaje;
+  late double overduePercentaje;
+  late double pendingPercentaje;
+
+  @override
+  void initState() {
+    super.initState();
+
+    donePercentaje = 100;
+    overduePercentaje = 0;
+    pendingPercentaje = 0;
+
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      generatePieData();
+    });
+  }
+
+  generatePieData() {
+    int total = widget.pending + widget.overdue + widget.done;
+    Future.delayed(Duration(milliseconds: 100), () {
+      setState(() {
+        donePercentaje = ((widget.done * 100) / total);
+        pendingPercentaje = ((widget.pending * 100) / total);
+        overduePercentaje = ((widget.overdue * 100) / total);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return PieChart(pieData);
+    return PieChart(
+      PieChartData(
+        sections: [
+          PieChartSectionData(
+            title: '$donePercentaje %',
+            value: donePercentaje,
+            color: Colors.blue.shade300,
+          ),
+          PieChartSectionData(
+            title: '$overduePercentaje %',
+            value: overduePercentaje,
+            color: Colors.red.shade500,
+          ),
+          PieChartSectionData(
+            title: '$pendingPercentaje %',
+            value: pendingPercentaje,
+            color: Colors.orange,
+          ),
+        ],
+      ),
+    );
   }
 }
 
-class _BarsGraphic extends StatelessWidget {
-  _BarsGraphic({Key? key}) : super(key: key);
+class _BarsGraphic extends StatefulWidget {
+  final int pending;
+  final int overdue;
+  final int done;
 
-  BarChartData barData = BarChartData(
-    alignment: BarChartAlignment.center,
-    groupsSpace: 70,
-    gridData: FlGridData(
-      show: false,
-    ),
-    borderData: FlBorderData(
-      show: false,
-    ),
-    titlesData: FlTitlesData(
-      rightTitles: SideTitles(
-        showTitles: false,
+  _BarsGraphic({
+    Key? key,
+    required this.done,
+    required this.pending,
+    required this.overdue,
+  }) : super(key: key);
+
+  @override
+  State<_BarsGraphic> createState() => _BarsGraphicState();
+}
+
+class _BarsGraphicState extends State<_BarsGraphic> {
+  late int pendingValue;
+  late int overdueValue;
+  late int doneValue;
+
+  @override
+  void initState() {
+    super.initState();
+
+    doneValue = 6;
+    pendingValue = 3;
+    overdueValue = 2;
+
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      generateBarsData();
+    });
+  }
+
+  generateBarsData() {
+    Future.delayed(Duration(milliseconds: 100), () {
+      setState(() {
+        doneValue = widget.done;
+        pendingValue = widget.pending;
+        overdueValue = widget.overdue;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BarChart(
+      BarChartData(
+        alignment: BarChartAlignment.center,
+        groupsSpace: 70,
+        gridData: FlGridData(
+          show: false,
+        ),
+        borderData: FlBorderData(
+          show: false,
+        ),
+        titlesData: FlTitlesData(
+          rightTitles: SideTitles(
+            showTitles: false,
+          ),
+          topTitles: SideTitles(
+            showTitles: false,
+          ),
+          leftTitles: SideTitles(
+            showTitles: true,
+            reservedSize: 30,
+          ),
+          bottomTitles: SideTitles(
+            showTitles: true,
+            reservedSize: 10,
+            getTitles: (double num) {
+              switch (num.toInt()) {
+                case 1:
+                  return 'Done';
+                case 2:
+                  return 'Pending';
+                case 3:
+                  return 'Overdue';
+                default:
+                  return '';
+              }
+            },
+          ),
+        ),
+        barGroups: [
+          BarChartGroupData(
+            x: 1,
+            barRods: [
+              BarChartRodData(
+                colors: [
+                  Colors.blue.shade300,
+                ],
+                y: doneValue.toDouble(),
+                width: 25,
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(0),
+                  bottomRight: Radius.circular(0),
+                  topLeft: Radius.circular(7),
+                  topRight: Radius.circular(7),
+                ),
+              )
+            ],
+          ),
+          BarChartGroupData(
+            x: 2,
+            barRods: [
+              BarChartRodData(
+                colors: [Colors.orange],
+                y: pendingValue.toDouble(),
+                width: 25,
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(0),
+                  bottomRight: Radius.circular(0),
+                  topLeft: Radius.circular(7),
+                  topRight: Radius.circular(7),
+                ),
+              )
+            ],
+          ),
+          BarChartGroupData(
+            x: 3,
+            barRods: [
+              BarChartRodData(
+                colors: [Colors.red.shade500],
+                y: overdueValue.toDouble(),
+                width: 25,
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(0),
+                  bottomRight: Radius.circular(0),
+                  topLeft: Radius.circular(7),
+                  topRight: Radius.circular(7),
+                ),
+              )
+            ],
+          ),
+        ],
       ),
-      topTitles: SideTitles(
-        showTitles: false,
-      ),
-      leftTitles: SideTitles(
-        showTitles: true,
-        reservedSize: 30,
-      ),
-      bottomTitles: SideTitles(
-        showTitles: true,
-        reservedSize: 10,
-        getTitles: (double num) {
-          switch (num.toInt()) {
-            case 1:
+    );
+  }
+}
+
+class _RadarGraphic extends StatefulWidget {
+  final int pending;
+  final int overdue;
+  final int done;
+
+  _RadarGraphic({
+    Key? key,
+    required this.done,
+    required this.pending,
+    required this.overdue,
+  }) : super(key: key);
+
+  @override
+  State<_RadarGraphic> createState() => _RadarGraphicState();
+}
+
+class _RadarGraphicState extends State<_RadarGraphic> {
+  late int pendingValue;
+  late int overdueValue;
+  late int doneValue;
+
+  @override
+  void initState() {
+    super.initState();
+
+    doneValue = 9;
+    pendingValue = 4;
+    overdueValue = 7;
+
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      generateRadarData();
+    });
+  }
+
+  generateRadarData() {
+    Future.delayed(Duration(milliseconds: 100), () {
+      setState(() {
+        doneValue = widget.done;
+        pendingValue = widget.pending;
+        overdueValue = widget.overdue;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return RadarChart(
+      RadarChartData(
+        getTitle: (int num) {
+          switch (num) {
+            case 0:
               return 'Done';
-            case 2:
+            case 1:
               return 'Pending';
-            case 3:
+            case 2:
               return 'Overdue';
             default:
               return '';
           }
         },
-      ),
-    ),
-    barGroups: [
-      BarChartGroupData(
-        x: 1,
-        barRods: [
-          BarChartRodData(
-            y: 7,
-            width: 25,
-            borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(0),
-              bottomRight: Radius.circular(0),
-              topLeft: Radius.circular(7),
-              topRight: Radius.circular(7),
-            ),
-          )
+        radarBorderData: const BorderSide(
+          color: Colors.transparent,
+        ),
+        tickBorderData: const BorderSide(
+          color: Colors.transparent,
+        ),
+        gridBorderData: BorderSide(
+          color: Colors.blue.withOpacity(0.7),
+        ),
+        borderData: FlBorderData(
+          show: false,
+        ),
+        ticksTextStyle: const TextStyle(color: Colors.transparent),
+        dataSets: [
+          RadarDataSet(
+            dataEntries: [
+              RadarEntry(value: doneValue.toDouble()),
+              RadarEntry(value: pendingValue.toDouble()),
+              RadarEntry(value: overdueValue.toDouble()),
+            ],
+          ),
         ],
       ),
-      BarChartGroupData(
-        x: 2,
-        barRods: [
-          BarChartRodData(
-            y: 4,
-            width: 25,
-            borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(0),
-              bottomRight: Radius.circular(0),
-              topLeft: Radius.circular(7),
-              topRight: Radius.circular(7),
-            ),
-          )
-        ],
-      ),
-      BarChartGroupData(
-        x: 3,
-        barRods: [
-          BarChartRodData(
-            y: 3,
-            width: 25,
-            borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(0),
-              bottomRight: Radius.circular(0),
-              topLeft: Radius.circular(7),
-              topRight: Radius.circular(7),
-            ),
-          )
-        ],
-      ),
-    ],
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    return BarChart(
-      barData,
-      swapAnimationDuration: Duration(milliseconds: 800),
-    );
-  }
-}
-
-class _RadarGraphic extends StatelessWidget {
-  _RadarGraphic({Key? key}) : super(key: key);
-
-  RadarChartData radarData = RadarChartData(
-    getTitle: (int num) {
-      switch (num) {
-        case 0:
-          return 'Done';
-        case 1:
-          return 'Pending';
-        case 2:
-          return 'Overdue';
-        default:
-          return '';
-      }
-    },
-    radarBorderData: const BorderSide(
-      color: Colors.transparent,
-    ),
-    tickBorderData: const BorderSide(
-      color: Colors.transparent,
-    ),
-    gridBorderData: BorderSide(
-      color: Colors.blue.withOpacity(0.7),
-    ),
-    borderData: FlBorderData(
-      show: false,
-    ),
-    ticksTextStyle: const TextStyle(color: Colors.transparent),
-    dataSets: [
-      RadarDataSet(
-        dataEntries: [
-          const RadarEntry(value: 4),
-          const RadarEntry(value: 7),
-          const RadarEntry(value: 3),
-        ],
-      ),
-    ],
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    return RadarChart(
-      radarData,
     );
   }
 }

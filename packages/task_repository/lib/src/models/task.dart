@@ -28,6 +28,7 @@ class Task extends Equatable {
     required int type,
     required int color,
     required DateTime date,
+    completed = false,
   }) {
     return Task._(
       id: null,
@@ -36,7 +37,7 @@ class Task extends Equatable {
       type: type,
       date: date,
       color: color,
-      completed: false,
+      completed: completed,
     );
   }
 

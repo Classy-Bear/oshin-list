@@ -94,9 +94,9 @@ class TaskTile extends StatelessWidget {
                       },
                     ),
                     IconButton(
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.check_circle_outline_outlined,
-                        color: Colors.green,
+                        color: Color(task.color!),
                       ),
                       onPressed: () {
                         //looking for an auto-drag solution

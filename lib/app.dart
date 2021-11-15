@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oshin_list/core/widgets/serch_app_bar/search_app_bar.dart';
+import 'package:oshin_list/modules/screens/statistics_screen.dart';
 import 'package:oshin_list/modules/screens/tasks_screen.dart';
 
 class MyApp extends StatelessWidget {
@@ -66,14 +67,14 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [TasksScreen(), Text('2'), Text('3')],
+        children: [TasksScreen(), StatisticScreen(), Text('3')],
       ),
       bottomNavigationBar: _TabNavBar(controller: _tabController),
       floatingActionButton: Offstage(
         offstage: currentTab != 0,
         child: FloatingActionButton(
           onPressed: () {},
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
         ),
       ),
     );
