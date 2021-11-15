@@ -1,19 +1,4 @@
-# This file configures the static analysis results for your project (errors,
-# warnings, and lints).
-#
-# This enables the 'recommended' set of lints from `package:lints`.
-# This set helps identify many issues that may lead to problems when running
-# or consuming Dart code, and enforces writing Dart using a single, idiomatic
-# style and format.
-#
-# If you want a smaller set of lints you can change this to specify
-# 'package:lints/core.yaml'. These are just the most critical lints
-# (the recommended set includes the core lints).
-# The core lints are also what is used by pub.dev for scoring packages.
-
 include: package:lints/recommended.yaml
-
-# Uncomment the following section to specify additional rules.
 
 linter:
   rules:
@@ -24,12 +9,17 @@ linter:
     - avoid_relative_lib_imports
     - avoid_returning_null_for_future
     - require_trailing_commas
+    - directives_ordering
+    - lines_longer_than_80_chars
 analyzer:
   exclude: [test/**.g.dart, test/**.mocks.dart]
   errors:
+    always_use_package_imports: error
+    avoid_dynamic_calls: error
+    avoid_empty_else: error
+    avoid_print: error
+    avoid_relative_lib_imports: error
+    avoid_returning_null_for_future: error
     require_trailing_commas: error
-# For more information about the core and recommended set of lints, see
-# https://dart.dev/go/core-lints
-
-# For additional information about configuring this file, see
-# https://dart.dev/guides/language/analysis-options
+    directives_ordering: warning
+    lines_longer_than_80_chars: error
