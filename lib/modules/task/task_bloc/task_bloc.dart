@@ -88,7 +88,7 @@ class TaskBloc extends Cubit<TaskState> {
     }
   }
 
-  Future<void> delete(int id) async {
+  Future<void> delete(String id) async {
     emit(state.copyWith(isLoading: true));
 
     try {

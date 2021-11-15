@@ -9,13 +9,13 @@ extension SelectedColor on Task {
     if (this.color! > 1 && this.color! < 20) {
       return 1;
     } else if (this.color! > 20 && this.color! < 40) {
-      return 997070;
+      return 0xff997070;
     } else if (this.color! > 40 && this.color! < 60) {
-      return 663399;
+      return 0xff663399;
     } else if (this.color! > 60 && this.color! < 80) {
-      return 008000;
+      return 0xff008000;
     } else {
-      return 008080;
+      return 0xff008080;
     }
   }
 }
@@ -23,13 +23,13 @@ extension SelectedColor on Task {
 extension SelectedType on Task {
   String get selectedType {
     if (this.type! > 1 && this.type! < 35) {
-      return "${Type.family}";
+      return Type.family.toString().split('.')[1];
     } else if (this.type! > 35 && this.type! < 70) {
-      return "${Type.work}";
+      return Type.work.toString().split('.')[1];
     } else if (this.type! > 70 && this.type! < 100) {
-      return "${Type.study}";
+      return Type.study.toString().split('.')[1];
     } else {
-      return "${Type.work}";
+      return Type.work.toString().split('.')[1];
     }
   }
 }
