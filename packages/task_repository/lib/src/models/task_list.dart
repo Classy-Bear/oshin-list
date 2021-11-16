@@ -32,6 +32,11 @@ class TaskList extends Equatable {
     return TaskList._(tasks: _tasks..removeWhere(where));
   }
 
+  TaskList where({required bool Function(Task) where}) {
+    final filteredTask = _tasks.where(where);
+    return TaskList._(tasks: filteredTask.toList());
+  }
+
   Task elementAt({required int index}) {
     return _tasks.elementAt(index);
   }

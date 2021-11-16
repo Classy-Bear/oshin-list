@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:task_repository/task_repository.dart';
+part of 'widgets.dart';
 
 class TaskTile extends StatelessWidget {
   final Task task;

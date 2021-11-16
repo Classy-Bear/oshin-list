@@ -21,10 +21,10 @@ class TaskBloc extends Cubit<TaskState> {
         super(const TaskState());
 
   /// Fetch a list of type [Task] to the to the list.
-  Future<void> getAll() async {
+  Future<void> getAll({bool Function(Task)? where}) async {
     emit(state.copyWith(status: FetchStatus.loading));
     try {
-      TaskList tasks = await _taskRepository.getAll();
+      TaskList tasks = await _taskRepository.getAll(where: where);
       emit(state.copyWith(tasks: tasks, status: FetchStatus.success));
     } on Exception {
       emit(state.copyWith(status: FetchStatus.failure));
