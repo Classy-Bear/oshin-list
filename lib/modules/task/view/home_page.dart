@@ -4,6 +4,7 @@ import 'package:oshin_list/core/widgets/serch_app_bar/search_app_bar.dart';
 import 'package:oshin_list/modules/statistics/views/statistics_page.dart';
 import 'package:oshin_list/modules/task/bloc/bloc.dart';
 import 'package:oshin_list/modules/task/view/task_page.dart';
+import 'package:oshin_list/modules/task_information/view/task_information_page.dart';
 
 class HomePage extends StatelessWidget {
   static const route = '/';
@@ -53,7 +54,9 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
       floatingActionButton: Offstage(
         offstage: currentTab != 0,
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, TaskInformationPage.route);
+          },
           child: const Icon(Icons.add),
         ),
       ),
