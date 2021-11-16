@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oshin_list/core/widgets/serch_app_bar/search_app_bar.dart';
-import 'package:oshin_list/modules/screens/statistics_screen.dart';
+import 'package:oshin_list/modules/statistics/views/statistics_page.dart';
 import 'package:oshin_list/modules/task/bloc/bloc.dart';
 import 'package:oshin_list/modules/task/view/task_page.dart';
 
@@ -47,7 +47,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [const TaskPage(), StatisticScreen()],
+        children: [const TaskPage(), StatisticsPage()],
       ),
       bottomNavigationBar: _TabNavBar(controller: _tabController),
       floatingActionButton: Offstage(

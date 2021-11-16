@@ -13,7 +13,6 @@ class TaskPage extends StatelessWidget {
   }
 }
 
-
 class TasksScreen extends StatelessWidget {
   const TasksScreen({Key? key}) : super(key: key);
 
@@ -46,7 +45,6 @@ class TasksScreen extends StatelessWidget {
                 },
               );
             },
-            
           ),
         ),
         const TaskListWidget()

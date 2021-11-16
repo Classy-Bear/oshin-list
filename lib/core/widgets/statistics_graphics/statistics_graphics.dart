@@ -90,7 +90,6 @@ class _TasksGraphicsState extends State<TasksGraphics> {
       overdueCount = overdue;
       completedCount = completed;
     });
-    debugPrint(completedCount.toString());
   }
 }
 

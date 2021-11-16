@@ -8,7 +8,7 @@ class FilterChips extends StatefulWidget {
   /// Creates a list of [Chip]s based on a list of filters.
   ///
   /// Selected filters are returned in the [onFilterSelect]
-  /// 
+  ///
   ///[multiselect] indicates wehter or not the user will be able to select multiple filters
   const FilterChips({
     Key? key,
@@ -53,11 +53,11 @@ class _FilterChipsState extends State<FilterChips> {
     }).toList();
   }
 
-  void updateFilters(bool isActive, String filter){
+  void updateFilters(bool isActive, String filter) {
     setState(() {
       if (isActive) {
-        if(!widget.multiselect){
-          _selectedFilters.removeWhere((element) => element!=filter);
+        if (!widget.multiselect) {
+          _selectedFilters.removeWhere((element) => element != filter);
         }
         _selectedFilters.add(filter);
       } else {
