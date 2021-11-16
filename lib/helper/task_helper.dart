@@ -29,11 +29,15 @@ extension TaskHelper on Task {
     }
   }
 
-  String get formatedDate {
-    return "${date?.day}-${date?.month}-${date?.year}";
-  }
+  String get formatedDate => date?.formatedDate ?? '';
 }
 
 extension TypeString on Type {
   String get typeString => toString().split('.')[1];
+}
+
+extension FormatedDate on DateTime {
+  String get formatedDate {
+    return "$day-$month-$year";
+  }
 }
