@@ -65,15 +65,16 @@ class FormTask extends StatelessWidget {
             items: type,
           ),
           const SizedBox(
+            height: 40,
+          ),
+          const Text(
+            "Choose a color",
+            style: TextStyle(color: Colors.black, fontSize: 20),
+          ),
+          const SizedBox(
             height: 20,
           ),
-          TextFormField(
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              border: UnderlineInputBorder(),
-              labelText: 'Insert a color',
-            ),
-          ),
+          // Color
           const SizedBox(
             height: 50,
           ),
