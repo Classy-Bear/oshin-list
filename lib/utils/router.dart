@@ -14,6 +14,15 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
           );
         },
       );
+    case TaskInformationPage.route:
+      return MaterialPageRoute(
+        builder: (_) {
+          return BlocProvider(
+            create: (context) => TaskBloc(),
+            child: const TaskInformationPage(),
+          );
+        },
+      );
     default:
       return MaterialPageRoute(
         builder: (_) {
