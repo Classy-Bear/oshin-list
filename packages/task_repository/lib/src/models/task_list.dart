@@ -42,9 +42,7 @@ class TaskList extends Equatable {
   }
 
   void forEach({required Function(Task) currentTask}) {
-    _tasks.forEach((task) {
-      currentTask(task);
-    });
+    _tasks.forEach((task) => currentTask(task));
   }
 
   static final one = TaskList._(tasks: [Task.empty]);

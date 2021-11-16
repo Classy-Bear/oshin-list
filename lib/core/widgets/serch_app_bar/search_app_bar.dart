@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class SearchAppBar extends StatefulWidget {
@@ -94,16 +96,26 @@ class _AppBarTextField extends StatelessWidget {
   final Function(String) onTextChanged;
   final String searchInputPlaceHolder;
 
-  const _AppBarTextField({
+  _AppBarTextField({
     Key? key,
     required this.searchInputPlaceHolder,
     required this.onTextChanged,
   }) : super(key: key);
 
+  Timer? timer = Timer(const Duration(seconds: 2), () {});
+
   @override
   Widget build(BuildContext context) {
     return TextField(
-      onChanged: (text) => onTextChanged(text),
+      onChanged: (text) {
+        if (timer?.isActive ?? false) {
+          timer!.cancel();
+        }
+
+        timer = Timer(const Duration(milliseconds: 400), () {
+          onTextChanged(text);
+        });
+      },
       maxLines: 1,
       decoration: InputDecoration(
         hintText: searchInputPlaceHolder,
