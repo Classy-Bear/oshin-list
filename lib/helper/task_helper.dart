@@ -1,7 +1,6 @@
 import 'package:oshin_list/helper/date_time_helper.dart';
-import 'package:task_repository/task_repository.dart';
 
-enum Type { work, study, family }
+import 'package:task_repository/task_repository.dart';
 
 extension TaskHelper on Task {
   int get selectedColor {
@@ -17,22 +16,7 @@ extension TaskHelper on Task {
       return 0xff008080;
     }
   }
-
-  String get selectedType {
-    if (type! > 1 && type! < 35) {
-      return Type.family.typeString;
-    } else if (type! > 35 && type! < 70) {
-      return Type.work.typeString;
-    } else if (type! > 70 && type! < 100) {
-      return Type.study.typeString;
-    } else {
-      return Type.work.typeString;
-    }
-  }
-
   String get formatedDate => date?.formatedDate ?? '';
 }
 
-extension TypeString on Type {
-  String get typeString => toString().split('.')[1];
-}
+

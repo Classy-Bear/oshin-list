@@ -1,10 +1,12 @@
 part of 'models.dart';
 
+enum Type { work, study, family }
+
 class Task extends Equatable {
   final String? id;
   final String? title;
   final String? description;
-  final int? type;
+  final Type? type;
   final DateTime? date;
   final int? color;
   final bool? completed;
@@ -30,7 +32,7 @@ class Task extends Equatable {
   factory Task.create({
     required String title,
     required String description,
-    required int type,
+    required Type type,
     required int color,
     required DateTime date,
     completed = false,
@@ -50,7 +52,7 @@ class Task extends Equatable {
     String? id,
     String? title,
     String? description,
-    int? type,
+    Type? type,
     DateTime? date,
     int? color,
     bool? completed,
@@ -73,7 +75,7 @@ class Task extends Equatable {
         id: json["id"],
         title: json["title"],
         description: json["description"],
-        type: json["type"],
+        type: int.tryParse(json["type"])?.selectedType,
         date: DateTime.tryParse(json["date"] ?? ''),
         color: json["color"],
         completed: json["completed"],
@@ -93,7 +95,7 @@ class Task extends Equatable {
     id: '1',
     title: "Do the dishes",
     description: "Before going to Maria's house.",
-    type: 1,
+    type: Type.work,
     date: DateTime(0),
     color: 0,
     completed: false,
@@ -109,4 +111,17 @@ class Task extends Equatable {
         color,
         completed,
       ];
+
+  int get selectedTypeRange {
+    switch (type) {
+      case Type.work:
+        return 1;
+      case Type.study:
+        return 36;
+      case Type.family:
+        return 71;
+      default:
+        return 1;
+    }
+  }
 }
