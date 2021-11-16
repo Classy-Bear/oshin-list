@@ -82,7 +82,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
         );
       case 1:
         return AppBar(
-          title: const Text('Metrics'),
+          title: const Text('Stadistics'),
           centerTitle: true,
         );
       default:
@@ -115,7 +115,7 @@ class _TabNavBar extends StatelessWidget {
           ),
           Tab(
             icon: Icon(Icons.show_chart),
-            text: 'Metrics',
+            text: 'Stadistics',
           ),
         ],
       ),
