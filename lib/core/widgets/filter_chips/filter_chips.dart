@@ -3,14 +3,18 @@ import 'package:flutter/material.dart';
 class FilterChips extends StatefulWidget {
   final List<String> filtersList;
   final Function(List<String>) onFilterSelect;
+  final bool multiselect;
 
   /// Creates a list of [Chip]s based on a list of filters.
   ///
   /// Selected filters are returned in the [onFilterSelect]
+  ///
+  ///[multiselect] indicates wehter or not the user will be able to select multiple filters
   const FilterChips({
     Key? key,
     required this.filtersList,
     required this.onFilterSelect,
+    this.multiselect = false,
   }) : super(key: key);
 
   @override
@@ -43,19 +47,24 @@ class _FilterChipsState extends State<FilterChips> {
           labelStyle: TextStyle(
             color: filterIsSelected ? Colors.white : Colors.black,
           ),
-          onSelected: (active) {
-            setState(() {
-              if (active) {
-                _selectedFilters.add(filter);
-              } else {
-                _selectedFilters.remove(filter);
-              }
-            });
-
-            widget.onFilterSelect(_selectedFilters);
-          },
+          onSelected: (active) => updateFilters(active, filter),
         ),
       );
     }).toList();
+  }
+
+  void updateFilters(bool isActive, String filter) {
+    setState(() {
+      if (isActive) {
+        if (!widget.multiselect) {
+          _selectedFilters.removeWhere((element) => element != filter);
+        }
+        _selectedFilters.add(filter);
+      } else {
+        _selectedFilters.remove(filter);
+      }
+    });
+
+    widget.onFilterSelect(_selectedFilters);
   }
 }
