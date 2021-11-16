@@ -17,10 +17,7 @@ class TasksView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-        TaskFilters(),
-        const TaskListWidget()
-      ],
+      children: [TaskFiltersWidget(), const TaskListWidget()],
     );
   }
 }

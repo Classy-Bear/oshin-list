@@ -43,11 +43,11 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
-        child: _currentChild(currentTab),
+        child: _CurrentAppBar(selectedIndex: currentTab),
       ),
       body: TabBarView(
         controller: _tabController,
-        children: const [ TaskPage(), StatisticsPage()],
+        children: const [TaskPage(), StatisticsPage()],
       ),
       bottomNavigationBar: _TabNavBar(controller: _tabController),
       floatingActionButton: Offstage(
@@ -59,10 +59,19 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
       ),
     );
   }
+}
 
-  // TODO: Mudar esto a una clase.
-  Widget _currentChild(int index) {
-    switch (index) {
+class _CurrentAppBar extends StatelessWidget {
+  final int selectedIndex;
+
+  const _CurrentAppBar({
+    Key? key,
+    required this.selectedIndex,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    switch (selectedIndex) {
       case 0:
         return SearchAppBar(
           onTextChanged: (text) {
