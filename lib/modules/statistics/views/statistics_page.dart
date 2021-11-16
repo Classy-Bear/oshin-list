@@ -8,10 +8,9 @@ class StatisticsPage extends StatelessWidget {
   const StatisticsPage({Key? key}) : super(key: key);
 
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return TasksGraphics(
       tasks: context.watch<TaskBloc>().state.tasks,
     );
   }
 }
-
