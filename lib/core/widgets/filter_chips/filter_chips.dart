@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 
-class FilterChipsRow extends StatefulWidget {
+class FilterChips extends StatefulWidget {
   final List<String> filtersList;
   final Function(List<String>) onFilterSelect;
 
-  ///Creates a list of [Chip]s based on a list of filters, selected filters are returned in the "onFilterSelect" Method
-  const FilterChipsRow({
+  /// Creates a list of [Chip]s based on a list of filters.
+  ///
+  /// Selected filters are returned in the [onFilterSelect]
+  const FilterChips({
     Key? key,
     required this.filtersList,
     required this.onFilterSelect,
   }) : super(key: key);
 
   @override
-  _FilterChipsRowState createState() => _FilterChipsRowState();
+  _FilterChipsState createState() => _FilterChipsState();
 }
 
-class _FilterChipsRowState extends State<FilterChipsRow> {
+class _FilterChipsState extends State<FilterChips> {
   final List<String> _selectedFilters = [];
 
   @override

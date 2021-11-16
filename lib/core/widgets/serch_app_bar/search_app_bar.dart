@@ -5,7 +5,9 @@ class SearchAppBar extends StatefulWidget {
   final String title;
   final String? searchInputPlaceHolder;
 
-  /// Creates an AppBar with the search, is necesary to call it inside of a [PreferredSize] widget
+  /// Creates an AppBar with a search functionality.
+  ///
+  /// **Note**: It's necesary to call it inside of a [PreferredSize] widget.
   const SearchAppBar({
     Key? key,
     required this.onTextChanged,
@@ -30,7 +32,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
           searchMode: searchMode,
           onModeChanged: (isSearchMode) {
             setState(() {
-              searchMode = isSearchMode;
+              searchMode = !isSearchMode;
             });
           },
         )
@@ -53,27 +55,31 @@ class _SearchAppBarState extends State<SearchAppBar> {
   }
 }
 
-class _AppBarButtons extends StatelessWidget {
-  bool searchMode;
+class _AppBarButtons extends StatefulWidget {
+  final bool searchMode;
   final Function(bool) onModeChanged;
 
-  _AppBarButtons({
+  const _AppBarButtons({
     Key? key,
     required this.searchMode,
     required this.onModeChanged,
   }) : super(key: key);
 
   @override
+  State<_AppBarButtons> createState() => _AppBarButtonsState();
+}
+
+class _AppBarButtonsState extends State<_AppBarButtons> {
+  @override
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () {
-        searchMode = !searchMode;
-        onModeChanged(searchMode);
+        widget.onModeChanged(widget.searchMode);
       },
-      icon: !searchMode
+      icon: !widget.searchMode
           ? const Icon(Icons.search)
           : const Icon(Icons.cancel_outlined),
-      color: !searchMode ? Colors.white : Colors.blue,
+      color: !widget.searchMode ? Colors.white : Colors.blue,
     );
   }
 }

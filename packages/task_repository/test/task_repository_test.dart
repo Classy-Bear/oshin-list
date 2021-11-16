@@ -1,65 +1,73 @@
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:task_repository/src/utils/utils.dart';
+import 'dart:io';
+
+import 'package:http/http.dart' as http;
+import 'package:http/testing.dart';
 import 'package:task_repository/task_repository.dart';
 import 'package:test/test.dart';
 
-import 'task_repository_test.mocks.dart';
-
-@GenerateMocks([TaskRepository])
 void main() {
-  late TaskRepository taskRepository;
+  TaskRepository? repository;
+  http.Client? httpClient;
+  final responseBody = Task.empty.toJson();
 
-  setUp(() {
-    taskRepository = MockTaskRepository();
-  });
-
-  group('Repsository tests', () {
-    test('getAll returns a list of Task', () async {
-      when(taskRepository.getAll()).thenAnswer((_) async => [Task.empty]);
-    });
-
-    test('getAll returns a ServerError ', () {
-      when(taskRepository.getAll()).thenThrow((_) async => ServerError);
-    });
-
-    test('create returns a Task', () async {
-      when(taskRepository.create(Task.empty))
-          .thenAnswer((_) async => Task.empty);
-    });
-
-    test('create returns a ServerError', () {
-      when(taskRepository.create(Task.empty))
-          .thenThrow((_) async => ServerError);
-    });
-
-    test('update return a task', () async {
-      when(taskRepository.update(Task.empty))
-          .thenAnswer((_) async => Task.empty);
-    });
-
-    test('update', () {
-      when(taskRepository.update(Task.empty))
-          .thenThrow(() async => ServerError);
-    });
-
-    test('delete returns void', () async {
-      when(taskRepository.delete('1')).thenAnswer((_) async => {});
-    });
-
-    test('delete returns a ServerError', () {
-      when(taskRepository.delete('1')).thenThrow((_) async => ServerError);
-    });
-  });
-
-  group('Task test', () {
-    // TODO: Make Task test here
-    test('Task test', () async {
-      when(
-        Task.fromJson(
-          ' {"title": "title",  "description":  "description",  "type": 1, "date": "",  "color": 1}',
+  group('$TaskRepository', () {
+    test('Create a task - Status code: 201', () async {
+      httpClient = MockClient((request) async {
+        final bodyRequest = Task.fromJson(request.body);
+        if (request.method == "POST") {
+          if (bodyRequest.id == null) {
+            return http.Response(responseBody, HttpStatus.created);
+          }
+        }
+        return http.Response("", HttpStatus.internalServerError);
+      });
+      repository = TaskRepository(httpClient: httpClient);
+      final empty = Task.empty;
+      final task = await repository?.create(
+        Task.create(
+          title: empty.title!,
+          description: empty.description!,
+          type: empty.type!,
+          color: empty.color!,
+          date: empty.date!,
         ),
-      ).thenAnswer((_) => Task.empty);
+      );
+      expect(task, Task.empty);
+    });
+
+    test('Delete a task - Status code: 200', () async {
+      httpClient = MockClient((request) async {
+        final id = request.url.pathSegments.last;
+        if (int.tryParse(id) is int) {
+          return http.Response("", HttpStatus.ok);
+        }
+        throw http.Response("", HttpStatus.internalServerError);
+      });
+      repository = TaskRepository(httpClient: httpClient);
+      await repository?.delete('1');
+      expect(HttpStatus.ok, HttpStatus.ok);
+    });
+
+    test('Get all task - Status code: 200', () async {
+      httpClient = MockClient((request) async {
+        return http.Response(TaskList.one.toJson(), HttpStatus.ok);
+      });
+      repository = TaskRepository(httpClient: httpClient);
+      final taskList = await repository?.getAll();
+      expect(taskList, TaskList.one);
+    });
+
+    test('Update a task - Status code: 200', () async {
+      httpClient = MockClient((request) async {
+        final bodyRequest = Task.fromJson(request.body);
+        if (bodyRequest.id != null) {
+          return http.Response(responseBody, HttpStatus.ok);
+        }
+        throw http.Response("", HttpStatus.internalServerError);
+      });
+      repository = TaskRepository(httpClient: httpClient);
+      final taskUpdated = await repository?.update(Task.empty);
+      expect(taskUpdated, Task.empty);
     });
   });
 }
