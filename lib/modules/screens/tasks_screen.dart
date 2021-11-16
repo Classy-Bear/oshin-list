@@ -47,21 +47,24 @@ class TasksScreen extends StatelessWidget {
   List<Task> tasks = [
     Task.create(
       title: 'terminar el homescreen',
-      description: 'se supone que debo deterinar la pantalla principal donde se mostrarán los tasks, pero no se muy bien como la haré',
+      description:
+          'se supone que debo deterinar la pantalla principal donde se mostrarán los tasks, pero no se muy bien como la haré',
       type: 1,
       color: 0xff5600D3,
       date: DateTime.now(),
     ),
     Task.create(
       title: 'terminar el homescreen',
-      description: 'se supone que debo deterinar la pantalla principal donde se mostrarán los tasks, pero no se muy bien como la haré',
+      description:
+          'se supone que debo deterinar la pantalla principal donde se mostrarán los tasks, pero no se muy bien como la haré',
       type: 1,
       color: 0xff09876A,
       date: DateTime.now(),
     ),
     Task.create(
       title: 'terminar el homescreen',
-      description: 'se supone que debo deterinar la pantalla principal donde se mostrarán los tasks, pero no se muy bien como la haré',
+      description:
+          'se supone que debo deterinar la pantalla principal donde se mostrarán los tasks, pero no se muy bien como la haré',
       type: 1,
       color: 0xff107FC7,
       date: DateTime.now(),

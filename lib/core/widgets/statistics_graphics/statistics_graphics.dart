@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:task_repository/task_repository.dart';
 
 class TasksGraphics extends StatefulWidget {
-  final List<Task> tasks;
+  TaskList tasks;
 
-  const TasksGraphics({
+  TasksGraphics({
     Key? key,
     required this.tasks,
   }) : super(key: key);
@@ -73,21 +73,24 @@ class _TasksGraphicsState extends State<TasksGraphics> {
   void gtg() {
     int pending = 0, overdue = 0, completed = 0;
 
-    for (var task in widget.tasks) {
-      if (task.isPending) {
-        pending += 1;
-      } else if (task.isOverdue) {
-        overdue += 1;
-      } else if (task.completed!) {
-        completed += 1;
-      }
-    }
+    widget.tasks.forEach(
+      currentTask: (task) {
+        if (task.isPending) {
+          pending += 1;
+        } else if (task.isOverdue) {
+          overdue += 1;
+        } else if (task.completed ?? false) {
+          completed += 1;
+        }
+      },
+    );
 
     setState(() {
       pendingCount = pending;
       overdueCount = overdue;
       completedCount = completed;
     });
+    debugPrint(completedCount.toString());
   }
 }
 
@@ -201,17 +204,17 @@ class _PieGraphicsState extends State<_PieGraphics> {
       PieChartData(
         sections: [
           PieChartSectionData(
-            title: '$donePercentaje %',
+            title: '${donePercentaje.round()} %',
             value: donePercentaje,
             color: Colors.blue.shade300,
           ),
           PieChartSectionData(
-            title: '$overduePercentaje %',
+            title: '${overduePercentaje.round()} %',
             value: overduePercentaje,
             color: Colors.red.shade500,
           ),
           PieChartSectionData(
-            title: '$pendingPercentaje %',
+            title: '${pendingPercentaje.round()} %',
             value: pendingPercentaje,
             color: Colors.orange,
           ),

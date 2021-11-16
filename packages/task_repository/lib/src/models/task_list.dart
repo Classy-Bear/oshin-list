@@ -41,6 +41,12 @@ class TaskList extends Equatable {
     return _tasks.elementAt(index);
   }
 
+  void forEach({required Function(Task) currentTask}) {
+    _tasks.forEach((task) {
+      currentTask(task);
+    });
+  }
+
   static final one = TaskList._(tasks: [Task.empty]);
 
   static const empty = TaskList._(tasks: []);

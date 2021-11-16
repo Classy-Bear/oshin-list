@@ -37,7 +37,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
               searchMode = !isSearchMode;
             });
 
-            if(!searchMode){
+            if (!searchMode) {
               widget.onSearchClosed();
             }
           },
