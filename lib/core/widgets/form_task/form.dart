@@ -50,13 +50,42 @@ class FormTask extends StatelessWidget {
                 labelText: 'Insert a title',
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: 'Insert a description',
+
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          DatePicker(
+            selectedDate: task?.date,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          SelectFormField(
+            type: SelectFormFieldType.dropdown,
+            initialValue: 'Work',
+            items: type,
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          const Text(
+            "Choose a color",
+            style: TextStyle(color: Colors.black, fontSize: 20),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          // Color
+          const SizedBox(
+            height: 50,
+          ),
+          Center(
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width / 1.5,
+              child: ElevatedButton(
+                child: Text(btnText),
+                onPressed: () {},
               ),
             ),
             const SizedBox(
