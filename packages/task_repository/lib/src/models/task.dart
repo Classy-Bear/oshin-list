@@ -75,7 +75,7 @@ class Task extends Equatable {
         id: json["id"],
         title: json["title"],
         description: json["description"],
-        type: int.tryParse(json["type"])?.selectedType,
+        type: int.parse("${json["type"]}").selectedType,
         date: DateTime.tryParse(json["date"] ?? ''),
         color: json["color"],
         completed: json["completed"],
