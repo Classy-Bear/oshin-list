@@ -16,7 +16,6 @@ class TaskTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final date = "${task.date?.day}-${task.date?.month}-${task.date?.year}";
     return Dismissible(
       key: const Key('dimiss'),
       background: Container(
