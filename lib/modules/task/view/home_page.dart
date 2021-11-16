@@ -47,7 +47,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [const TaskPage(), StatisticsPage()],
+        children: const [ TaskPage(), StatisticsPage()],
       ),
       bottomNavigationBar: _TabNavBar(controller: _tabController),
       floatingActionButton: Offstage(
