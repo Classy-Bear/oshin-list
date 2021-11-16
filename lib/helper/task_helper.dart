@@ -1,3 +1,4 @@
+import 'package:oshin_list/helper/date_time_helper.dart';
 import 'package:task_repository/task_repository.dart';
 
 enum Type { work, study, family }
@@ -34,10 +35,4 @@ extension TaskHelper on Task {
 
 extension TypeString on Type {
   String get typeString => toString().split('.')[1];
-}
-
-extension FormatedDate on DateTime {
-  String get formatedDate {
-    return "$day-$month-$year";
-  }
 }
