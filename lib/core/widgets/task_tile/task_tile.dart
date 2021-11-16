@@ -1,4 +1,6 @@
-part of 'widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:task_repository/task_repository.dart';
 
 class TaskTile extends StatelessWidget {
   final Task task;
@@ -16,7 +18,6 @@ class TaskTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final date = "${task.date?.day}-${task.date?.month}-${task.date?.year}";
     return Dismissible(
       key: const Key('dimiss'),
       background: Container(
@@ -61,9 +62,12 @@ class TaskTile extends StatelessWidget {
           ),
           title: Text(task.title ?? ''),
           textColor: Color(task.color!),
+
           subtitle: Text(
-            'Date due: $date',
+            'Date due : ${task.date?.day}-${task.date?.month}-${task.date?.year}',
           ),
+          //don't wanna nothing in trailing, but need the layout working fine.
+          // so a transparent icon is a good solution ;)
           trailing: const Icon(
             Icons.remove,
             color: Colors.transparent,
@@ -85,6 +89,7 @@ class TaskTile extends StatelessWidget {
                         color: Colors.red,
                       ),
                       onPressed: () {
+                        //looking for auto-drag solution
                         onDelete(task);
                       },
                     ),
@@ -94,6 +99,7 @@ class TaskTile extends StatelessWidget {
                         color: Color(task.color!),
                       ),
                       onPressed: () {
+                        //looking for an auto-drag solution
                         onDone(task);
                       },
                     ),
@@ -107,3 +113,15 @@ class TaskTile extends StatelessWidget {
     );
   }
 }
+
+// class TaskTileList extends StatelessWidget {
+//   List<Task> taskList;
+
+//   const TaskTileList(
+//     {Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container();
+//   }
+// }
