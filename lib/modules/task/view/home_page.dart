@@ -75,6 +75,9 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
           },
           title: 'Oshin Tasklist',
           searchInputPlaceHolder: 'Search your task',
+          onSearchClosed: (){
+            context.read<TaskBloc>().getAll();
+          },
         );
       case 1:
         return AppBar(
