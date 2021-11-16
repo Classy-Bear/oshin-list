@@ -13,7 +13,7 @@ class TasksScreen extends StatelessWidget {
         //=======Filters row==========
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
-          child: FilterChipsRow(
+          child: FilterChips(
             filtersList: const [
               'Recently added',
               'Pending today',
@@ -54,8 +54,7 @@ class TasksScreen extends StatelessWidget {
     ),
     Task.create(
       title: 'terminar el homescreen',
-      description:
-          'se supone que debo deterinar la pantalla principal donde se mostrarán los tasks, pero no se muy bien como la haré',
+      description: 'se supone que debo deterinar la pantalla principal donde se mostrarán los tasks, pero no se muy bien como la haré',
       type: 1,
       color: 0xff09876A,
       date: DateTime.now(),

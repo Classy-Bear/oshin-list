@@ -32,7 +32,7 @@ class _TasksGraphicsState extends State<TasksGraphics> {
       children: [
         Expanded(
           flex: 9,
-          child: Container(
+          child: SizedBox(
             width: 320,
             height: 320,
             child: selectedChart == ChartType.pie
@@ -73,7 +73,7 @@ class _TasksGraphicsState extends State<TasksGraphics> {
   void gtg() {
     int pending = 0, overdue = 0, completed = 0;
 
-    widget.tasks.forEach((task) {
+    for (var task in widget.tasks) {
       if (task.isPending) {
         pending += 1;
       } else if (task.isOverdue) {
@@ -81,7 +81,7 @@ class _TasksGraphicsState extends State<TasksGraphics> {
       } else if (task.completed!) {
         completed += 1;
       }
-    });
+    }
 
     setState(() {
       pendingCount = pending;
@@ -94,7 +94,7 @@ class _TasksGraphicsState extends State<TasksGraphics> {
 class _GraphicsSelector extends StatefulWidget {
   final Function(ChartType) onSelectionChanged;
 
-  _GraphicsSelector({Key? key, required this.onSelectionChanged})
+  const _GraphicsSelector({Key? key, required this.onSelectionChanged})
       : super(key: key);
 
   @override

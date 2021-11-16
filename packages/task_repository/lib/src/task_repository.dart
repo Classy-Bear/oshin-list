@@ -47,7 +47,7 @@ class TaskRepository implements TaskDataProvider {
   }
 
   @override
-  Future<TaskList> getAll() async {
+  Future<TaskList> getAll({bool Function(Task)? where}) async {
     late final http.Response response;
     try {
       response = await _httpClient.get(Uri.parse(apiUrl));
@@ -58,7 +58,8 @@ class TaskRepository implements TaskDataProvider {
     if (statusCode != HttpStatus.ok) throw ServerError();
     try {
       final body = json.decode(response.body) as List;
-      return TaskList.fromJson(body);
+      final taskList = TaskList.fromJson(body);
+      return where == null ? taskList : taskList.where(where: where);
     } on Exception {
       throw ServerError();
     }

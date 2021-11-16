@@ -9,20 +9,13 @@ class FormTask extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String title;
-    final String btnText;
-    final List<Map<String, dynamic>> _type = [
-      {
-        'value': 'Work',
-      },
-      {
-        'value': 'Study',
-      },
-      {
-        'value': 'Family',
-      },
+    late final String title;
+    late final String btnText;
+    final List<Map<String, dynamic>> type = [
+      {'value': 'Work'},
+      {'value': 'Study'},
+      {'value': 'Family'},
     ];
-
     if (task != null) {
       title = "Update your task";
       btnText = "Update";
@@ -30,7 +23,6 @@ class FormTask extends StatelessWidget {
       title = "Create your task";
       btnText = "Create";
     }
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 16),
       child: Column(
@@ -54,8 +46,9 @@ class FormTask extends StatelessWidget {
           ),
           TextFormField(
             decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: 'Insert a description',),
+              border: UnderlineInputBorder(),
+              labelText: 'Insert a description',
+            ),
           ),
           const SizedBox(
             height: 20,
@@ -67,11 +60,9 @@ class FormTask extends StatelessWidget {
             height: 20,
           ),
           SelectFormField(
-            type: SelectFormFieldType.dropdown, // or can be dialog
+            type: SelectFormFieldType.dropdown,
             initialValue: 'Work',
-            items: _type,
-            onChanged: (val) => debugPrint(val),
-            onSaved: (val) => debugPrint(val),
+            items: type,
           ),
           const SizedBox(
             height: 20,
@@ -79,7 +70,9 @@ class FormTask extends StatelessWidget {
           TextFormField(
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
-                border: UnderlineInputBorder(), labelText: 'Insert a color',),
+              border: UnderlineInputBorder(),
+              labelText: 'Insert a color',
+            ),
           ),
           const SizedBox(
             height: 50,
