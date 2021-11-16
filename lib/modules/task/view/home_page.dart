@@ -67,7 +67,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
           onTextChanged: (text) {
             context.read<TaskBloc>().getAll(
               where: (task) {
-                if(text.isEmpty) return true;
+                if (text.isEmpty) return true;
                 return (task.description?.contains(text) ?? false) ||
                     (task.title?.contains(text) ?? false);
               },

@@ -31,7 +31,7 @@ class TasksScreen extends StatelessWidget {
             onFilterSelect: (filters) {
               context.read<TaskBloc>().getAll(
                 where: (task) {
-                  if(filters.isEmpty) return true;
+                  if (filters.isEmpty) return true;
                   for (var filter in filters) {
                     if (filter == 'Pending' && task.isPending) {
                       return true;
