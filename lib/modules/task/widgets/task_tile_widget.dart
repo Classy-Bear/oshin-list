@@ -90,7 +90,7 @@ class TaskTile extends StatelessWidget {
                     IconButton(
                       icon: Icon(
                         Icons.check_circle_outline_outlined,
-                        color: Color(task.color!),
+                        color: Color(task.selectedColor),
                       ),
                       onPressed: () {
                         onDone(task);

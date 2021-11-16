@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:oshin_list/helper/date_time_helper.dart';
 
 class DatePicker extends StatefulWidget {
   const DatePicker({Key? key, this.selectedDate}) : super(key: key);
@@ -11,7 +11,6 @@ class DatePicker extends StatefulWidget {
 
 class _DatePickerState extends State<DatePicker> {
   late final DateTime selectedDate;
-  final DateFormat formatter = DateFormat('yyyy-MM-dd');
 
   @override
   void initState() {
@@ -39,7 +38,7 @@ class _DatePickerState extends State<DatePicker> {
       readOnly: true,
       decoration: InputDecoration(
         border: const UnderlineInputBorder(),
-        hintText: formatter.format(selectedDate),
+        hintText: selectedDate.formatedDate,
       ),
       onTap: () => _selectDate(context),
     );
