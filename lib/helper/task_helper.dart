@@ -5,7 +5,7 @@ enum Type { work, study, family }
 extension SelectedColor on Task {
   int get selectedColor {
     if (color! > 1 && color! < 20) {
-      return 0xff997070;
+      return 0xffF5B7B1;
     } else if (color! > 20 && color! < 40) {
       return 0xff997070;
     } else if (color! > 40 && color! < 60) {

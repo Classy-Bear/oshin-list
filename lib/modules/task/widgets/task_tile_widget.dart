@@ -37,7 +37,7 @@ class TaskTile extends StatelessWidget {
         alignment: Alignment.centerRight,
         width: double.infinity,
         height: double.infinity,
-        color: Color(task.color!),
+        color: Color(task.selectedColor),
         child: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 30),
           child: Icon(
@@ -56,11 +56,11 @@ class TaskTile extends StatelessWidget {
             height: double.infinity,
             child: Icon(
               Icons.circle,
-              color: Color(task.color!),
+              color: Color(task.selectedColor),
             ),
           ),
           title: Text(task.title ?? ''),
-          textColor: Color(task.color!),
+          textColor: Color(task.selectedColor),
           subtitle: Text(
             'Date due: $date',
           ),
