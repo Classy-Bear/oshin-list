@@ -102,14 +102,14 @@ class _AppBarTextField extends StatelessWidget {
     required this.onTextChanged,
   }) : super(key: key);
 
-  Timer? timer = Timer(const Duration(seconds: 2), () {});
+  Timer timer = Timer(const Duration(seconds: 2), () {});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       onChanged: (text) {
-        if (timer?.isActive ?? false) {
-          timer!.cancel();
+        if (timer.isActive) {
+          timer.cancel();
         }
 
         timer = Timer(const Duration(milliseconds: 400), () {
