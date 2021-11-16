@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class SearchAppBar extends StatefulWidget {
   final Function(String) onTextChanged;
+  final VoidCallback onSearchClosed;
   final String title;
   final String? searchInputPlaceHolder;
 
@@ -12,6 +13,7 @@ class SearchAppBar extends StatefulWidget {
     Key? key,
     required this.onTextChanged,
     required this.title,
+    required this.onSearchClosed,
     this.searchInputPlaceHolder,
   }) : super(key: key);
 
@@ -34,6 +36,10 @@ class _SearchAppBarState extends State<SearchAppBar> {
             setState(() {
               searchMode = !isSearchMode;
             });
+
+            if (!searchMode) {
+              widget.onSearchClosed();
+            }
           },
         )
       ], //searchBarButtons(),
