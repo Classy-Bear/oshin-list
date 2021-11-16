@@ -16,7 +16,7 @@ class TaskRepository implements TaskDataProvider {
         body: json.encode({
           "title": task.title,
           "description": task.description,
-          "type": task.type,
+          "type": task.selectedTypeRange,
           "date": task.date?.toIso8601String(),
           "color": task.color,
           "completed": task.completed,

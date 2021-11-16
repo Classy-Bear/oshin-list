@@ -4,6 +4,7 @@ import 'package:oshin_list/core/widgets/serch_app_bar/search_app_bar.dart';
 import 'package:oshin_list/modules/statistics/views/statistics_page.dart';
 import 'package:oshin_list/modules/task/bloc/bloc.dart';
 import 'package:oshin_list/modules/task/view/task_page.dart';
+import 'package:oshin_list/modules/task_information/view/task_information_page.dart';
 
 class HomePage extends StatelessWidget {
   static const route = '/';
@@ -43,26 +44,37 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
-        child: _currentChild(currentTab),
+        child: _CurrentAppBar(selectedIndex: currentTab),
       ),
       body: TabBarView(
         controller: _tabController,
-        children: const [ TaskPage(), StatisticsPage()],
+        children: const [TaskPage(), StatisticsPage()],
       ),
       bottomNavigationBar: _TabNavBar(controller: _tabController),
       floatingActionButton: Offstage(
         offstage: currentTab != 0,
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, TaskInformationPage.route);
+          },
           child: const Icon(Icons.add),
         ),
       ),
     );
   }
+}
 
-  // TODO: Mudar esto a una clase.
-  Widget _currentChild(int index) {
-    switch (index) {
+class _CurrentAppBar extends StatelessWidget {
+  final int selectedIndex;
+
+  const _CurrentAppBar({
+    Key? key,
+    required this.selectedIndex,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    switch (selectedIndex) {
       case 0:
         return SearchAppBar(
           onTextChanged: (text) {
