@@ -1,7 +1,5 @@
 part of 'models.dart';
 
-enum Type { work, study, family }
-
 class Task extends Equatable {
   final String? id;
   final String? title;
@@ -75,7 +73,7 @@ class Task extends Equatable {
         id: json["id"],
         title: json["title"],
         description: json["description"],
-        type: int.parse("${json["type"]}").selectedType,
+        type: int.tryParse("${json["type"]}")?.selectedType ?? Type.work,
         date: DateTime.tryParse(json["date"] ?? ''),
         color: json["color"],
         completed: json["completed"],
@@ -114,8 +112,6 @@ class Task extends Equatable {
 
   int get selectedTypeRange {
     switch (type) {
-      case Type.work:
-        return 1;
       case Type.study:
         return 36;
       case Type.family:
@@ -124,4 +120,19 @@ class Task extends Equatable {
         return 1;
     }
   }
+
+  int get selectedColor {
+    if ((color ?? 1) > 1 && (color ?? 1) < 20) {
+      return 0xffF5B7B1;
+    } else if ((color ?? 1) > 20 && (color ?? 1) < 40) {
+      return 0xff997070;
+    } else if ((color ?? 1) > 40 && (color ?? 1) < 60) {
+      return 0xff663399;
+    } else if ((color ?? 1) > 60 && (color ?? 1) < 80) {
+      return 0xff008000;
+    } else {
+      return 0xff008080;
+    }
+  }
+
 }

@@ -1,4 +1,4 @@
-import 'package:task_repository/src/models/models.dart';
+enum Type { work, study, family }
 
 extension TaskType on int {
   Type get selectedType {
