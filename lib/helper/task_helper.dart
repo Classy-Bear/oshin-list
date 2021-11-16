@@ -21,13 +21,21 @@ extension SelectedColor on Task {
 extension SelectedType on Task {
   String get selectedType {
     if (type! > 1 && type! < 35) {
-      return Type.family.toString().split('.')[1];
+      return getType(Type.family);
     } else if (type! > 35 && type! < 70) {
-      return Type.work.toString().split('.')[1];
+      return getType(Type.work);
     } else if (type! > 70 && type! < 100) {
-      return Type.study.toString().split('.')[1];
+      return getType(Type.study);
     } else {
-      return Type.work.toString().split('.')[1];
+      return getType(Type.work);
     }
   }
+}
+
+String getType(Enum typeEnum) {
+  return typeEnum.toString().split('.')[1];
+}
+
+String date(DateTime date) {
+  return "${date.day}-${date.month}-${date.year}";
 }
