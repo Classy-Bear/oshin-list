@@ -49,7 +49,7 @@ class TaskRepository implements TaskDataProvider {
   }
 
   @override
-  Future<List<Task>> getAll() async {
+  Future<List<Task>> getAll({bool Function(Task)? where}) async {
     late final http.Response response;
     try {
       response = await _httpClient.get(Uri.parse(apiUrl));
@@ -64,9 +64,7 @@ class TaskRepository implements TaskDataProvider {
       final tasks = <Task>[];
       final body = json.decode(response.body) as Map<String, dynamic>;
       final data = body['data'] as List;
-      for (var element in data) {
-        tasks.add(Task.fromMap(element));
-      }
+      
       return tasks;
     } on Exception {
       throw ServerError();

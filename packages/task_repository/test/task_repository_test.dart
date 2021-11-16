@@ -1,49 +1,65 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:task_repository/src/utils/utils.dart';
 import 'package:task_repository/task_repository.dart';
 import 'package:test/test.dart';
 
 import 'task_repository_test.mocks.dart';
 
-@GenerateMocks([http.Client])
+@GenerateMocks([TaskRepository])
 void main() {
-  final client = MockClient();
-  const url = "https://618c209fded7fb0017bb942a.mockapi.io/task";
-  TaskRepository taskRepository = TaskRepository();
+  late TaskRepository taskRepository;
 
-  group('fetch Task', () {
-    test('return a list of task if the call completes successfully', () async {
-      when(client.get(Uri.parse(url))).thenAnswer((_) async => http.Response(
-          '[{"id": 1, "title": "title", "descriptio":"description", "type": 1, "color": 1},{"id": 2, "title": "title", "descriptio":"description", "type": 1, "color": 1}]',
-          200));
-      expect(await taskRepository.getAll(), isA<List<Task>>());
+  setUp(() {
+    taskRepository = MockTaskRepository();
+  });
+
+  group('Repsository tests', () {
+    test('getAll returns a list of Task', () async {
+      when(taskRepository.getAll()).thenAnswer((_) async => [Task.empty]);
     });
 
-    test('returnd a exception if the http call completes with a error ', () {
-      when(client.get(Uri.parse(url)))
-          .thenAnswer((_) async => http.Response('No found', 404));
+    test('getAll returns a ServerError ', () {
+      when(taskRepository.getAll()).thenThrow((_) async => ServerError);
+    });
 
-      expect(taskRepository.getAll(), throwsException);
+    test('create returns a Task', () async {
+      when(taskRepository.create(Task.empty))
+          .thenAnswer((_) async => Task.empty);
+    });
+
+    test('create returns a ServerError', () {
+      when(taskRepository.create(Task.empty))
+          .thenThrow((_) async => ServerError);
+    });
+
+    test('update return a task', () async {
+      when(taskRepository.update(Task.empty))
+          .thenAnswer((_) async => Task.empty);
+    });
+
+    test('update', () {
+      when(taskRepository.update(Task.empty))
+          .thenThrow(() async => ServerError);
+    });
+
+    test('delete returns void', () async {
+      when(taskRepository.delete('1')).thenAnswer((_) async => {});
+    });
+
+    test('delete returns a ServerError', () {
+      when(taskRepository.delete('1')).thenThrow((_) async => ServerError);
     });
   });
 
-  // group('create a new task', () {
-  //   Task task =  ;
-  //   test('return the task that was created if the call completes successfully',
-  //       () async {
-  //     when(client.post(Uri.parse(url),
-  //         body: json.encode({
-  //         "title": "Limpiar la cocina",
-  //         "description":"modeling",
-  //         "type":  1,
-  //         "date": DateTime,
-  //         "color":1,
-  //       }),))
-  //         .thenAnswer((_) async => http.Response('', 200));
-  //     expect(await taskRepository.create(task), isA<Task>());
-  //   });
-  // });
+  group('Task test', () {
+    // TODO: Make Task test here
+    test('Task test', () async {
+      when(
+        Task.fromJson(
+          ' {"title": "title",  "description":  "description",  "type": 1, "date": "",  "color": 1}',
+        ),
+      ).thenAnswer((_) => Task.empty);
+    });
+  });
 }
