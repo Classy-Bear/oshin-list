@@ -2,7 +2,7 @@ import 'package:task_repository/task_repository.dart';
 
 enum Type { work, study, family }
 
-extension SelectedColor on Task {
+extension TaskHelper on Task {
   int get selectedColor {
     if (color! > 1 && color! < 20) {
       return 0xffF5B7B1;
@@ -16,26 +16,24 @@ extension SelectedColor on Task {
       return 0xff008080;
     }
   }
-}
 
-extension SelectedType on Task {
   String get selectedType {
     if (type! > 1 && type! < 35) {
-      return getType(Type.family);
+      return Type.family.typeString;
     } else if (type! > 35 && type! < 70) {
-      return getType(Type.work);
+      return Type.work.typeString;
     } else if (type! > 70 && type! < 100) {
-      return getType(Type.study);
+      return Type.study.typeString;
     } else {
-      return getType(Type.work);
+      return Type.work.typeString;
     }
+  }
+
+  String get formatedDate {
+    return "${date?.day}-${date?.month}-${date?.year}";
   }
 }
 
-String getType(Enum typeEnum) {
-  return typeEnum.toString().split('.')[1];
-}
-
-String date(DateTime date) {
-  return "${date.day}-${date.month}-${date.year}";
+extension TypeString on Type {
+  String get typeString => toString().split('.')[1];
 }
