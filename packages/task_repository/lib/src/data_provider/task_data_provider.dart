@@ -2,7 +2,7 @@ part of 'data_provider.dart';
 
 abstract class TaskDataProvider {
   /// Gets all the tasks.
-  Future<TaskList> getAll();
+  Future<TaskList> getAll({bool Function(Task)? where});
 
   /// Deletes a [Task] by its [id].
   Future<void> delete(String id);

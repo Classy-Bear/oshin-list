@@ -8,7 +8,7 @@ class TaskList extends Equatable {
   }) : _tasks = tasks ?? const [];
 
   factory TaskList.fromJson(List tasks) =>
-      TaskList._(tasks: tasks.map((json) => Task.fromJson(json)).toList());
+      TaskList._(tasks: tasks.map((json) => Task.fromMap(json)).toList());
 
   String toJson() => json.encode(_tasks.map((task) => task.toJson()).toList());
 
@@ -32,13 +32,20 @@ class TaskList extends Equatable {
     return TaskList._(tasks: _tasks..removeWhere(where));
   }
 
-  Task elementAt({required int id}) {
-    return _tasks.elementAt(id);
+  TaskList where({required bool Function(Task) where}) {
+    final filteredTask = _tasks.where(where);
+    return TaskList._(tasks: filteredTask.toList());
+  }
+
+  Task elementAt({required int index}) {
+    return _tasks.elementAt(index);
   }
 
   static final one = TaskList._(tasks: [Task.empty]);
 
   static const empty = TaskList._(tasks: []);
+
+  int get length => _tasks.length;
 
   @override
   List<Object?> get props => [_tasks];

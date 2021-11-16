@@ -32,7 +32,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
           searchMode: searchMode,
           onModeChanged: (isSearchMode) {
             setState(() {
-              searchMode = isSearchMode;
+              searchMode = !isSearchMode;
             });
           },
         )

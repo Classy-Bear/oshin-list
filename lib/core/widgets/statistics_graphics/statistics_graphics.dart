@@ -33,7 +33,7 @@ class _TasksGraphicsState extends State<TasksGraphics> {
       children: [
         Expanded(
           flex: 9,
-          child: Container(
+          child: SizedBox(
             width: 320,
             height: 320,
             child: selectedChart == ChartType.pie
@@ -62,7 +62,7 @@ class _TasksGraphicsState extends State<TasksGraphics> {
   void gtg() {
     int pending = 0, overdue = 0, completed = 0;
 
-    widget.tasks.forEach((task) {
+    for (var task in widget.tasks) {
       if (task.isPending) {
         pending += 1;
       } else if (task.isOverdue) {
@@ -70,7 +70,7 @@ class _TasksGraphicsState extends State<TasksGraphics> {
       } else if (task.completed!) {
         completed += 1;
       }
-    });
+    }
 
     setState(() {
       pendingCount = pending;
@@ -83,7 +83,7 @@ class _TasksGraphicsState extends State<TasksGraphics> {
 class _GraphicsSelector extends StatefulWidget {
   final Function(ChartType) onSelectionChanged;
 
-  _GraphicsSelector({Key? key, required this.onSelectionChanged})
+  const _GraphicsSelector({Key? key, required this.onSelectionChanged})
       : super(key: key);
 
   @override
@@ -141,7 +141,7 @@ class __GraphicsSelectorState extends State<_GraphicsSelector> {
 class _PieGraphics extends StatelessWidget {
   _PieGraphics({Key? key}) : super(key: key);
 
-  PieChartData pieData = PieChartData(
+  final PieChartData pieData = PieChartData(
     sections: [
       PieChartSectionData(
         title: '20%',
@@ -167,7 +167,7 @@ class _PieGraphics extends StatelessWidget {
 class _BarsGraphic extends StatelessWidget {
   _BarsGraphic({Key? key}) : super(key: key);
 
-  BarChartData barData = BarChartData(
+  final BarChartData barData = BarChartData(
     alignment: BarChartAlignment.center,
     groupsSpace: 70,
     gridData: FlGridData(
@@ -257,7 +257,7 @@ class _BarsGraphic extends StatelessWidget {
   Widget build(BuildContext context) {
     return BarChart(
       barData,
-      swapAnimationDuration: Duration(milliseconds: 800),
+      swapAnimationDuration: const Duration(milliseconds: 800),
     );
   }
 }
@@ -265,7 +265,7 @@ class _BarsGraphic extends StatelessWidget {
 class _RadarGraphic extends StatelessWidget {
   _RadarGraphic({Key? key}) : super(key: key);
 
-  RadarChartData radarData = RadarChartData(
+  final RadarChartData radarData = RadarChartData(
     getTitle: (int num) {
       switch (num) {
         case 0:

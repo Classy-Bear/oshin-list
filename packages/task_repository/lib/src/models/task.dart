@@ -8,9 +8,14 @@ class Task extends Equatable {
   final DateTime? date;
   final int? color;
   final bool? completed;
-  
-  bool get isPending => (completed == false && DateTime.now().isBefore(date!));
-  bool get isOverdue => (completed == false && DateTime.now().isAfter(date!));
+
+  bool get isPending => (completed == false && date == null
+      ? false
+      : DateTime.now().isBefore(date!));
+
+  bool get isOverdue => (completed == false && date == null
+      ? false
+      : DateTime.now().isAfter(date!));
 
   const Task._({
     required this.id,
@@ -88,7 +93,7 @@ class Task extends Equatable {
     title: "Do the dishes",
     description: "Before going to Maria's house.",
     type: 1,
-    date: DateTime.now(),
+    date: DateTime(0),
     color: 0,
     completed: false,
   );

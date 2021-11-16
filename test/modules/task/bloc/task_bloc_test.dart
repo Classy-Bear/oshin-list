@@ -16,14 +16,14 @@ void main() {
     final taskDataProvider = MockTaskDataProvider();
 
     test('initial state is correct', () {
-      final taskBloc = TaskBloc(taskDataProvider);
+      final taskBloc = TaskBloc(taskRepository: taskDataProvider);
       expect(taskBloc.state, const TaskState());
     });
 
     group('getAll', () {
       blocTest<TaskBloc, TaskState>(
         '"getAll" fetchs all the task',
-        build: () => TaskBloc(taskDataProvider),
+        build: () => TaskBloc(taskRepository: taskDataProvider),
         setUp: () {
           when(taskDataProvider.getAll()).thenAnswer((_) async => TaskList.one);
         },
@@ -44,7 +44,7 @@ void main() {
     group('create', () {
       blocTest<TaskBloc, TaskState>(
         '"create" creates a new task',
-        build: () => TaskBloc(taskDataProvider),
+        build: () => TaskBloc(taskRepository: taskDataProvider),
         setUp: () {
           when(taskDataProvider.create(Task.empty))
               .thenAnswer((_) async => Task.empty);
@@ -71,7 +71,7 @@ void main() {
               .thenAnswer((_) async => Task.empty);
           when(taskDataProvider.delete('1')).thenAnswer((_) async => {});
         },
-        build: () => TaskBloc(taskDataProvider),
+        build: () => TaskBloc(taskRepository: taskDataProvider),
         act: (bloc) => bloc
           ..create(Task.empty)
           ..delete('1'),

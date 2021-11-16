@@ -5,6 +5,15 @@ part of 'utils.dart';
 /// Use this route generator in [MaterialApp.onGenerateRoute].
 Route<dynamic> onGenerateRoute(RouteSettings settings) {
   switch (settings.name) {
+    case HomePage.route:
+      return MaterialPageRoute(
+        builder: (_) {
+          return BlocProvider(
+            create: (context) => TaskBloc(),
+            child: const HomePage(),
+          );
+        },
+      );
     default:
       return MaterialPageRoute(
         builder: (_) {
