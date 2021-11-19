@@ -9,7 +9,8 @@ class FilterChips extends StatefulWidget {
   ///
   /// Selected filters are returned in the [onFilterSelect]
   ///
-  ///[multiselect] indicates wehter or not the user will be able to select multiple filters
+  ///[multiselect] indicates wehter or not the user will be able to select
+  /// multiple filters
   const FilterChips({
     Key? key,
     required this.filtersList,
@@ -68,7 +69,7 @@ class _FilterChipsState extends State<FilterChips> {
         _selectedFilters.add(filter);
       } else {
         _selectedFilters.remove(filter);
-        if(_selectedFilters.isEmpty) {
+        if (_selectedFilters.isEmpty) {
           _selectedFilters.add(filter);
         }
       }

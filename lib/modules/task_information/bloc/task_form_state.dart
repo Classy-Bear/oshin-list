@@ -18,15 +18,8 @@ class TaskFormState extends Equatable {
   final FormzStatus status;
 
   @override
-  List<Object> get props => [
-        title,
-        description,
-        color,
-        color,
-        dateTime,
-        type,
-        status
-      ];
+  List<Object> get props =>
+      [title, description, color, color, dateTime, type, status];
 
   TaskFormState copyWith({
     TitleValidator? title,
@@ -46,4 +39,3 @@ class TaskFormState extends Equatable {
     );
   }
 }
-

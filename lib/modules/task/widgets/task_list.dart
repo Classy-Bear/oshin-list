@@ -33,8 +33,8 @@ class _TaskListWidgetState extends State<TaskListWidget> {
         onDone: (task) async {
           await context.read<TaskBloc>().update(task.copyWith(completed: true));
           await context.read<TaskBloc>().getAll(
-            where: (task)=>task.isPending == true,
-          );
+                where: (task) => task.isPending == true,
+              );
         },
         onDelete: (task) => context.read<TaskBloc>().delete(task.id ?? '-1'),
         onLongPress: (task) async {
@@ -47,8 +47,8 @@ class _TaskListWidgetState extends State<TaskListWidget> {
             ),
           );
           context.read<TaskBloc>().getAll(
-            where: (task)=>task.isPending == true,
-          );
+                where: (task) => task.isPending == true,
+              );
         },
       );
     }

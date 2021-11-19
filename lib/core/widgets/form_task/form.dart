@@ -162,7 +162,7 @@ class _FormTask extends StatelessWidget {
               width: 300,
               height: 150,
               colors: colorList,
-              onColorTap:(color){
+              onColorTap: (color) {
                 context.read<TaskFormBloc>().colorChanged(colorRange(color));
               },
               initialSelectedcolor: Color(task?.selectedColor ?? 0),
