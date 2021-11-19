@@ -61,7 +61,7 @@ class TaskTileWidget extends StatelessWidget {
           title: Text(task.title ?? ''),
           textColor: Color(task.selectedColor),
           subtitle: Text(
-            'Date due: ${task.date?.formatedDate ?? "Date not found"}',
+            'Date due: ${task.date?.ddmmaa ?? "Date not found"}',
           ),
           trailing: const Icon(
             Icons.remove,

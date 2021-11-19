@@ -31,7 +31,7 @@ class _DatePickerState extends State<DatePicker> {
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: selectedDate ??  DateTime.now(),
+      initialDate: selectedDate ?? DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime(5000),
     );
@@ -49,7 +49,7 @@ class _DatePickerState extends State<DatePicker> {
       readOnly: true,
       decoration: InputDecoration(
         border: const UnderlineInputBorder(),
-        hintText: selectedDate?.formatedDate ?? 'Select a date',
+        hintText: selectedDate?.ddmmaa ?? 'Select a date',
       ),
       onTap: () => _selectDate(context),
     );
