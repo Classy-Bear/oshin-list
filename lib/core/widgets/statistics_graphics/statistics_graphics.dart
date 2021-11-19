@@ -29,15 +29,13 @@ class TasksGraphics extends StatelessWidget {
         SizedBox(
           width: 320,
           height: 320,
-          child: 
-          selectedChart == ChartType.pie
+          child: selectedChart == ChartType.pie
               ? _PieGraphics(
                   done: completedCount,
                   overdue: overdueCount,
                   pending: pendingCount,
                 )
-              : 
-              (selectedChart == ChartType.bar)
+              : (selectedChart == ChartType.bar)
                   ? _BarsGraphic(
                       done: completedCount,
                       pending: pendingCount,

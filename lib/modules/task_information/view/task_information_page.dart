@@ -8,7 +8,7 @@ class TaskInformationPage extends StatelessWidget {
   const TaskInformationPage({Key? key, required this.task}) : super(key: key);
 
   final Task? task;
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

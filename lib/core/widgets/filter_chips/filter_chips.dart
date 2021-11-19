@@ -68,7 +68,7 @@ class _FilterChipsState extends State<FilterChips> {
         _selectedFilters.add(filter);
       } else {
         _selectedFilters.remove(filter);
-        if(_selectedFilters.isEmpty) {
+        if (_selectedFilters.isEmpty) {
           _selectedFilters.add(filter);
         }
       }
