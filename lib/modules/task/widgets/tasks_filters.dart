@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:oshin_list/core/widgets/filter_chips/filter_chips.dart';
-import 'package:oshin_list/modules/task/bloc/bloc.dart';
+part of 'widgets.dart';
 
 class TaskFiltersWidget extends StatefulWidget {
-  TaskFiltersWidget({Key? key}) : super(key: key);
+  const TaskFiltersWidget({Key? key}) : super(key: key);
 
   @override
   _TaskFiltersWidgetState createState() => _TaskFiltersWidgetState();

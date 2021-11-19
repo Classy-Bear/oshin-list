@@ -1,12 +1,12 @@
 part of 'widgets.dart';
 
-class TaskTile extends StatelessWidget {
+class TaskTileWidget extends StatelessWidget {
   final Task task;
   final Function(Task) onLongPress;
   final Function(Task) onDone;
   final Function(Task) onDelete;
 
-  const TaskTile({
+  const TaskTileWidget({
     Key? key,
     required this.task,
     required this.onDone,

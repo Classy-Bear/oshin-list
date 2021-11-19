@@ -1,4 +1,4 @@
-import 'package:formz/formz.dart';
+part of 'models.dart';
 
 /// Validation errors for the [ColorValidator] [FormzInput].
 enum ColorValidationEror {
@@ -14,6 +14,6 @@ class ColorValidator extends FormzInput<int, ColorValidationEror> {
 
   @override
   ColorValidationEror? validator(int value) {
-    return value.isNegative ? ColorValidationEror.invalid : null;
+    return  value.isNegative ? ColorValidationEror.invalid : null;
   }
 }

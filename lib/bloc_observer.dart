@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:bloc/bloc.dart';
 
 /// Watch all changes and errors of any [Bloc].
@@ -30,3 +28,5 @@ class AppBlocObserver extends BlocObserver {
     super.onError(bloc, error, stackTrace);
   }
 }
+
+// TODO(chore): Añadir un logger en vez de hacer prints.

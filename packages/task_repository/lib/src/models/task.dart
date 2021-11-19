@@ -4,16 +4,16 @@ class Task extends Equatable {
   final String? id;
   final String? title;
   final String? description;
-  final Type? type;
+  final TaskType? type;
   final DateTime? date;
   final int? color;
   final bool? completed;
 
-  bool get isPending => 
-  (completed == false && DateTime.now().isBefore(date??DateTime.now()));
+  bool get isPending =>
+      (completed == false && DateTime.now().isBefore(date ?? DateTime.now()));
 
-  bool get isOverdue => 
-  (completed == false && DateTime.now().isAfter(date??DateTime.now()));
+  bool get isOverdue =>
+      (completed == false && DateTime.now().isAfter(date ?? DateTime.now()));
 
   const Task._({
     required this.id,
@@ -28,10 +28,9 @@ class Task extends Equatable {
   factory Task.create({
     required String title,
     required String description,
-    required Type type,
+    required TaskType type,
     required int color,
     required DateTime date,
-    completed = false,
   }) {
     return Task._(
       id: null,
@@ -40,7 +39,7 @@ class Task extends Equatable {
       type: type,
       date: date,
       color: color,
-      completed: completed,
+      completed: false,
     );
   }
 
@@ -48,7 +47,7 @@ class Task extends Equatable {
     String? id,
     String? title,
     String? description,
-    Type? type,
+    TaskType? type,
     DateTime? date,
     int? color,
     bool? completed,
@@ -71,7 +70,7 @@ class Task extends Equatable {
         id: json["id"],
         title: json["title"],
         description: json["description"],
-        type: int.tryParse("${json["type"]}")?.selectedType ?? Type.work,
+        type: int.tryParse("${json["type"]}")?.toType,
         date: DateTime.tryParse(json["date"] ?? ''),
         color: json["color"],
         completed: json["completed"],
@@ -91,7 +90,7 @@ class Task extends Equatable {
     id: '1',
     title: "Do the dishes",
     description: "Before going to Maria's house.",
-    type: Type.work,
+    type: TaskType.work,
     date: DateTime(0),
     color: 0,
     completed: false,
@@ -108,29 +107,43 @@ class Task extends Equatable {
         completed,
       ];
 
-  int get selectedTypeRange {
+  int? get typeAsInt {
     switch (type) {
-      case Type.study:
+      case TaskType.work:
+        return 0;
+      case TaskType.study:
         return 36;
-      case Type.family:
+      case TaskType.family:
         return 71;
       default:
-        return 1;
+        return null;
     }
   }
 
   int get selectedColor {
-    if ((color ?? 1) > 1 && (color ?? 1) < 20) {
+    final color = this.color ?? empty.color ?? 0;
+    if (color > 1 && color < 20) {
       return 0xffF5B7B1;
-    } else if ((color ?? 1) > 20 && (color ?? 1) < 40) {
+    } else if (color > 20 && color < 40) {
       return 0xff997070;
-    } else if ((color ?? 1) > 40 && (color ?? 1) < 60) {
+    } else if (color > 40 && color < 60) {
       return 0xff663399;
-    } else if ((color ?? 1) > 60 && (color ?? 1) < 80) {
-      return 0xff008000;
     } else {
-      return 0xff008080;
+      return 0xff008000;
     }
   }
+}
 
+extension IntTypeMethods on int {
+  TaskType? get toType {
+    if (this > 0 && this < 35) {
+      return TaskType.work;
+    } else if (this > 35 && this < 70) {
+      return TaskType.study;
+    } else if (this > 70 && this < 100) {
+      return TaskType.family;
+    } else {
+      return null;
+    }
+  }
 }

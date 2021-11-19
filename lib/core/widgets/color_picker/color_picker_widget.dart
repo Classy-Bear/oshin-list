@@ -4,23 +4,27 @@ import 'package:flutter/material.dart';
 ///
 /// **Note**: Please don't repeat colors in the color list, this may cause UI
 /// inconsistences :D
-class ColorPicker extends StatefulWidget {
+class ColorPickerWidget extends StatefulWidget {
   final List<Color> colors;
   final Function(Color) onColorTap;
   final Color? initialSelectedcolor;
+  final double width;
+  final double height;
 
-  const ColorPicker({
+  const ColorPickerWidget({
     Key? key,
     required this.colors,
     required this.onColorTap,
     this.initialSelectedcolor,
+    this.width = double.infinity,
+    this.height = double.infinity,
   }) : super(key: key);
 
   @override
-  _ColorPickerState createState() => _ColorPickerState();
+  _ColorPickerWidgetState createState() => _ColorPickerWidgetState();
 }
 
-class _ColorPickerState extends State<ColorPicker> {
+class _ColorPickerWidgetState extends State<ColorPickerWidget> {
   late Color _currentSelectedColor;
 
   @override
@@ -31,14 +35,18 @@ class _ColorPickerState extends State<ColorPicker> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GridView.count(
-          crossAxisCount: 4,
-          mainAxisSpacing: 3,
-          crossAxisSpacing: 3,
-          children: _colorsToTiles(),
+    return SizedBox(
+      height: widget.height,
+      width: widget.width,
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GridView.count(
+            crossAxisCount: 4,
+            mainAxisSpacing: 3,
+            crossAxisSpacing: 3,
+            children: _colorsToTiles(),
+          ),
         ),
       ),
     );

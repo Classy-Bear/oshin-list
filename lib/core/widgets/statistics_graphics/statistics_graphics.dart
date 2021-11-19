@@ -2,95 +2,60 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:task_repository/task_repository.dart';
 
-class TasksGraphics extends StatefulWidget {
-  TaskList tasks;
+class TasksGraphics extends StatelessWidget {
+  final TaskList tasks;
+  final Function(ChartType) onChangedChart;
+  final ChartType? selectedChart;
+  final int completedCount;
+  final int overdueCount;
+  final int pendingCount;
 
-  TasksGraphics({
+  const TasksGraphics({
     Key? key,
     required this.tasks,
+    required this.onChangedChart,
+    required this.selectedChart,
+    required this.completedCount,
+    required this.overdueCount,
+    required this.pendingCount,
   }) : super(key: key);
-
-  @override
-  _TasksGraphicsState createState() => _TasksGraphicsState();
-}
-
-class _TasksGraphicsState extends State<TasksGraphics> {
-  ChartType selectedChart = ChartType.pie;
-  int pendingCount = 0, overdueCount = 0, completedCount = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    gtg();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Expanded(
-          flex: 9,
-          child: SizedBox(
-            width: 320,
-            height: 320,
-            child: selectedChart == ChartType.pie
-                ? _PieGraphics(
-                    done: completedCount,
-                    overdue: overdueCount,
-                    pending: pendingCount,
-                  )
-                : (selectedChart == ChartType.bar)
-                    ? _BarsGraphic(
-                        done: completedCount,
-                        pending: pendingCount,
-                        overdue: overdueCount,
-                      )
-                    : (selectedChart == ChartType.radar)
-                        ? _RadarGraphic(
-                            done: completedCount,
-                            pending: pendingCount,
-                            overdue: overdueCount,
-                          )
-                        : Container(),
-          ),
+        SizedBox(
+          width: 320,
+          height: 320,
+          child: 
+          selectedChart == ChartType.pie
+              ? _PieGraphics(
+                  done: completedCount,
+                  overdue: overdueCount,
+                  pending: pendingCount,
+                )
+              : 
+              (selectedChart == ChartType.bar)
+                  ? _BarsGraphic(
+                      done: completedCount,
+                      pending: pendingCount,
+                      overdue: overdueCount,
+                    )
+                  : (selectedChart == ChartType.radar)
+                      ? _RadarGraphic(
+                          done: completedCount,
+                          pending: pendingCount,
+                          overdue: overdueCount,
+                        )
+                      : Container(),
         ),
-        Expanded(
-          flex: 1,
-          child: _GraphicsSelector(
-            onSelectionChanged: (selection) {
-              setState(() {
-                selectedChart = selection;
-              });
-            },
-          ),
+        _GraphicsSelector(
+          onSelectionChanged: onChangedChart,
         )
       ],
     );
-  }
-
-  void gtg() {
-    int pending = 0, overdue = 0, completed = 0;
-
-    widget.tasks.forEach(
-      currentTask: (task) {
-        if (task.isPending) {
-          pending += 1;
-        } else if (task.isOverdue) {
-          overdue += 1;
-        } else if (task.completed ?? false) {
-          completed += 1;
-        }
-      },
-    );
-
-    setState(() {
-      pendingCount = pending;
-      overdueCount = overdue;
-      completedCount = completed;
-    });
-    debugPrint(completedCount.toString());
   }
 }
 
@@ -105,12 +70,23 @@ class _GraphicsSelector extends StatefulWidget {
 }
 
 class __GraphicsSelectorState extends State<_GraphicsSelector> {
-  ChartType currentSelectedGraphic = ChartType.pie;
+  ChartType? currentSelectedGraphic = null;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(milliseconds: 500), () {
+      setState(() {
+        currentSelectedGraphic = ChartType.bar;
+        widget.onSelectionChanged(currentSelectedGraphic!);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
         IconButton(
@@ -149,7 +125,7 @@ class __GraphicsSelectorState extends State<_GraphicsSelector> {
       currentSelectedGraphic = selected;
     });
 
-    widget.onSelectionChanged(currentSelectedGraphic);
+    widget.onSelectionChanged(currentSelectedGraphic!);
   }
 }
 
@@ -158,7 +134,7 @@ class _PieGraphics extends StatefulWidget {
   final int overdue;
   final int done;
 
-  _PieGraphics({
+  const _PieGraphics({
     Key? key,
     required this.pending,
     required this.overdue,
@@ -189,7 +165,7 @@ class _PieGraphicsState extends State<_PieGraphics> {
 
   generatePieData() {
     int total = widget.pending + widget.overdue + widget.done;
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
         donePercentaje = ((widget.done * 100) / total);
         pendingPercentaje = ((widget.pending * 100) / total);
@@ -229,7 +205,7 @@ class _BarsGraphic extends StatefulWidget {
   final int overdue;
   final int done;
 
-  _BarsGraphic({
+  const _BarsGraphic({
     Key? key,
     required this.done,
     required this.pending,
@@ -259,7 +235,7 @@ class _BarsGraphicState extends State<_BarsGraphic> {
   }
 
   generateBarsData() {
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
         doneValue = widget.done;
         pendingValue = widget.pending;
@@ -370,7 +346,7 @@ class _RadarGraphic extends StatefulWidget {
   final int overdue;
   final int done;
 
-  _RadarGraphic({
+  const _RadarGraphic({
     Key? key,
     required this.done,
     required this.pending,
@@ -400,7 +376,7 @@ class _RadarGraphicState extends State<_RadarGraphic> {
   }
 
   generateRadarData() {
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
         doneValue = widget.done;
         pendingValue = widget.pending;

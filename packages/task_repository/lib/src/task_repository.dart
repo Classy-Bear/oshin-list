@@ -16,11 +16,13 @@ class TaskRepository implements TaskDataProvider {
         body: json.encode({
           "title": task.title,
           "description": task.description,
-          "type": task.selectedTypeRange,
           "date": task.date?.toIso8601String(),
           "color": task.color,
           "completed": task.completed,
         }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       );
     } catch (e) {
       throw ServerError();
@@ -38,7 +40,12 @@ class TaskRepository implements TaskDataProvider {
   Future<void> delete(String id) async {
     late final http.Response response;
     try {
-      response = await _httpClient.delete(Uri.parse('$apiUrl/$id'));
+      response = await _httpClient.delete(
+        Uri.parse('$apiUrl/$id'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
     } on Exception {
       throw ServerError();
     }
@@ -50,7 +57,12 @@ class TaskRepository implements TaskDataProvider {
   Future<TaskList> getAll({bool Function(Task)? where}) async {
     late final http.Response response;
     try {
-      response = await _httpClient.get(Uri.parse(apiUrl));
+      response = await _httpClient.get(
+        Uri.parse(apiUrl),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
     } on Exception {
       throw ServerError();
     }
@@ -80,11 +92,8 @@ class TaskRepository implements TaskDataProvider {
       if (task.description != null) {
         body['description'] = task.description;
       }
-      if (task.type != null) {
-        body['type'] = task.type;
-      }
       if (task.date != null) {
-        body['date'] = task.date!.toIso8601String();
+        body['date'] = task.date?.toIso8601String();
       }
       if (task.color != null) {
         body['color'] = task.color;
@@ -95,6 +104,9 @@ class TaskRepository implements TaskDataProvider {
       response = await _httpClient.put(
         Uri.parse('$apiUrl/${task.id}'),
         body: json.encode(body),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       );
     } catch (e) {
       throw ServerError();

@@ -2,7 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:oshin_list/core/network/network.dart';
+import 'package:oshin_list/core/network/fetch_status.dart';
 import 'package:oshin_list/modules/task/bloc/bloc.dart';
 import 'package:task_repository/task_repository.dart';
 

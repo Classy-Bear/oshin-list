@@ -22,9 +22,9 @@ class TaskList extends Equatable {
     if (index == -1) {
       return this;
     } else {
-      final tasks = TaskList._(tasks: _tasks);
-      tasks._tasks[index] = task;
-      return tasks;
+      _tasks.removeAt(index);
+      _tasks.insert(index, task);
+      return TaskList._(tasks: _tasks);
     }
   }
 
@@ -42,7 +42,7 @@ class TaskList extends Equatable {
   }
 
   void forEach({required Function(Task) currentTask}) {
-    _tasks.forEach((task) => currentTask(task));
+    _tasks.forEach(currentTask);
   }
 
   static final one = TaskList._(tasks: [Task.empty]);
@@ -54,3 +54,5 @@ class TaskList extends Equatable {
   @override
   List<Object?> get props => [_tasks];
 }
+
+// TODO(Style): Cuando usar 'arrow functions'?

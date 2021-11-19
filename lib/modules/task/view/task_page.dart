@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:oshin_list/modules/task/widgets/tasks_filters.dart';
-import 'package:oshin_list/modules/task/widgets/widgets.dart';
+part of 'home_page.dart';
 
 class TaskPage extends StatelessWidget {
   const TaskPage({Key? key}) : super(key: key);
@@ -17,7 +15,10 @@ class TasksView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [TaskFiltersWidget(), const TaskListWidget()],
+      children: const [
+        TaskFiltersWidget(),
+        TaskListWidget(),
+      ],
     );
   }
 }

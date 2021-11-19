@@ -4,30 +4,38 @@ part of 'utils.dart';
 ///
 /// Use this route generator in [MaterialApp.onGenerateRoute].
 Route<dynamic> onGenerateRoute(RouteSettings settings) {
+  final taskBloc = TaskBloc();
+  final taskFormBloc = TaskFormBloc();
+  final args = settings.arguments;
+  final screenRouteName = settings.name;
   switch (settings.name) {
     case HomePage.route:
       return MaterialPageRoute(
-        builder: (_) {
-          return BlocProvider(
-            create: (context) => TaskBloc(),
-            child: const HomePage(),
-          );
-        },
+        builder: (_) => MultiBlocProvider(
+          providers: [
+            BlocProvider.value(value: taskBloc),
+            BlocProvider.value(value: taskFormBloc),
+          ],
+          child: const HomePage(),
+        ),
       );
     case TaskInformationPage.route:
+      Task? task;
+      if (args != null) {
+        task = Task.fromMap((args as ScreenArguments).data);
+      }
       return MaterialPageRoute(
-        builder: (_) {
-          return BlocProvider(
-            create: (context) => TaskBloc(),
-            child: const TaskInformationPage(),
-          );
-        },
+        builder: (_) => MultiBlocProvider(
+          providers: [
+            BlocProvider.value(value: taskBloc),
+            BlocProvider.value(value: taskFormBloc),
+          ],
+          child: TaskInformationPage(task: task),
+        ),
       );
     default:
       return MaterialPageRoute(
-        builder: (_) {
-          return NotFoundPage(screenName: settings.name);
-        },
+        builder: (_) => NotFoundPage(screenRouteName: screenRouteName),
       );
   }
 }

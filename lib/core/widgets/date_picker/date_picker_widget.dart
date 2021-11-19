@@ -1,33 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:oshin_list/helper/date_time_helper.dart';
+import 'package:oshin_list/helper/date_time.dart';
 
 class DatePicker extends StatefulWidget {
-  const DatePicker({Key? key, this.selectedDate}) : super(key: key);
-  final DateTime? selectedDate;
+  const DatePicker({
+    Key? key,
+    this.initialDate,
+    required this.onChanged,
+  }) : super(key: key);
+
+  final DateTime? initialDate;
+  final Function(DateTime) onChanged;
 
   @override
   State<DatePicker> createState() => _DatePickerState();
 }
 
 class _DatePickerState extends State<DatePicker> {
-  late final DateTime selectedDate;
+  DateTime? selectedDate;
 
   @override
   void initState() {
     super.initState();
-    selectedDate = widget.selectedDate ?? DateTime.now();
+    setState(() {
+      if (widget.initialDate != null) {
+        selectedDate = widget.initialDate;
+      }
+    });
   }
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2019, 1), // TODO: Porque 2019?
-      lastDate: DateTime(2050), // TODO: Porque 2050?
+      initialDate: selectedDate ??  DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(5000),
     );
     if (picked != null) {
       setState(() {
         selectedDate = picked;
+        widget.onChanged(picked);
       });
     }
   }
@@ -38,7 +49,7 @@ class _DatePickerState extends State<DatePicker> {
       readOnly: true,
       decoration: InputDecoration(
         border: const UnderlineInputBorder(),
-        hintText: selectedDate.formatedDate,
+        hintText: selectedDate?.formatedDate ?? 'Select a date',
       ),
       onTap: () => _selectDate(context),
     );

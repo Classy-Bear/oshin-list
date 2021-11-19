@@ -52,6 +52,7 @@ class TaskBloc extends Cubit<TaskState> {
           .replaceWhere(task: newTask, where: (task) => task.id == newTask.id);
       emit(state.copyWith(tasks: newTaskList, status: FetchStatus.success));
     } catch (error) {
+      debugPrint('MALDITA SEA CON!AZO');
       emit(state.copyWith(status: FetchStatus.failure));
     }
   }
@@ -64,6 +65,7 @@ class TaskBloc extends Cubit<TaskState> {
       final newTaskList = state.tasks.removeWhere(
         where: (task) => task.id == id,
       );
+      debugPrint('${newTaskList == state.tasks}');
       emit(state.copyWith(tasks: newTaskList, status: FetchStatus.success));
     } catch (error) {
       emit(state.copyWith(status: FetchStatus.failure));

@@ -6,15 +6,6 @@ class AppPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _AppView();
-  }
-}
-
-class _AppView extends StatelessWidget {
-  const _AppView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Oshin List',
       onGenerateRoute: onGenerateRoute,

@@ -22,7 +22,13 @@ class FilterChips extends StatefulWidget {
 }
 
 class _FilterChipsState extends State<FilterChips> {
-  final List<String> _selectedFilters = [];
+  late final List<String> _selectedFilters;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedFilters = [widget.filtersList.first];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +68,9 @@ class _FilterChipsState extends State<FilterChips> {
         _selectedFilters.add(filter);
       } else {
         _selectedFilters.remove(filter);
+        if(_selectedFilters.isEmpty) {
+          _selectedFilters.add(filter);
+        }
       }
     });
 

@@ -32,18 +32,18 @@ class _SearchAppBarState extends State<SearchAppBar> {
       automaticallyImplyLeading: false,
       centerTitle: true,
       actions: [
-        _AppBarButtons(
-          searchMode: searchMode,
-          onModeChanged: (isSearchMode) {
-            setState(() {
-              searchMode = !isSearchMode;
-            });
+        // _AppBarButtons(
+        //   searchMode: searchMode,
+        //   onModeChanged: (isSearchMode) {
+        //     setState(() {
+        //       searchMode = !isSearchMode;
+        //     });
 
-            if (!searchMode) {
-              widget.onSearchClosed();
-            }
-          },
-        )
+        //     if (!searchMode) {
+        //       widget.onSearchClosed();
+        //     }
+        //   },
+        // )
       ], //searchBarButtons(),
       backgroundColor: searchMode ? Colors.white : Colors.blue,
       title: searchMode
