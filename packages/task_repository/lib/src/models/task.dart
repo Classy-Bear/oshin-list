@@ -15,6 +15,16 @@ class Task extends Equatable {
   bool get isOverdue =>
       (completed == false && DateTime.now().isAfter(date ?? DateTime.now()));
 
+  bool get isPastelPink =>
+      colorValidate(color) > 0 && colorValidate(color) < 20;
+
+  bool get isPurple => colorValidate(color) > 19 && colorValidate(color) < 40;
+
+  bool get islightBrown =>
+      colorValidate(color) > 39 && colorValidate(color) < 60;
+
+  bool get isGreen => colorValidate(color) > 59;
+
   const Task._({
     required this.id,
     required this.title,
@@ -121,15 +131,14 @@ class Task extends Equatable {
   }
 
   int get selectedColor {
-    final color = this.color ?? empty.color ?? 0;
-    if (color > 1 && color < 20) {
-      return 0xffF5B7B1;
-    } else if (color > 20 && color < 40) {
-      return 0xff997070;
-    } else if (color > 40 && color < 60) {
-      return 0xff663399;
+    if (isPastelPink) {
+      return pastelPink;
+    } else if (isPurple) {
+      return purple;
+    } else if (islightBrown) {
+      return lightBrown;
     } else {
-      return 0xff008000;
+      return green;
     }
   }
 }
