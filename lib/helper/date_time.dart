@@ -1,5 +1,5 @@
 extension FormatedDate on DateTime {
-  String get formatedDate {
+  String get ddmmaa {
     return "$day-$month-$year";
   }
 }

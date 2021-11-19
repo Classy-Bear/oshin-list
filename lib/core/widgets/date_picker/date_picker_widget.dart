@@ -49,7 +49,7 @@ class _DatePickerState extends State<DatePicker> {
       readOnly: true,
       decoration: InputDecoration(
         border: const UnderlineInputBorder(),
-        hintText: selectedDate?.formatedDate ?? 'Select a date',
+        hintText: selectedDate?.ddmmaa ?? 'Select a date',
       ),
       onTap: () => _selectDate(context),
     );
