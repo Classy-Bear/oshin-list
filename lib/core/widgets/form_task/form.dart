@@ -4,7 +4,7 @@ import 'package:oshin_list/core/widgets/color_picker/color_picker_widget.dart';
 import 'package:oshin_list/core/widgets/date_picker/date_picker_widget.dart';
 import 'package:oshin_list/core/widgets/text_field/text_field_widget.dart';
 import 'package:oshin_list/helper/color_helper.dart';
-import 'package:oshin_list/helper/type.dart';
+import 'package:oshin_list/helper/task_type.dart';
 import 'package:oshin_list/modules/task/bloc/bloc.dart';
 import 'package:oshin_list/modules/task_information/bloc/task_form_bloc.dart';
 import 'package:task_repository/task_repository.dart';
@@ -52,8 +52,7 @@ class _FormTaskWidgetState extends State<FormTaskWidget> {
             context.read<TaskFormBloc>().typeChanged(strAsTaskType(string));
           },
           onColorChanged: (color) {
-            int colorRange1 = colorRange(color);
-            context.read<TaskFormBloc>().colorChanged(colorRange1);
+            context.read<TaskFormBloc>().colorChanged(color.colorRange);
           },
           onFormSubmit: () {
             context.read<TaskFormBloc>().submitForm(
@@ -106,10 +105,10 @@ class _FormTask extends StatelessWidget {
     late final String title;
     late final String btnText;
     const List<Color> colorList = [
-      Color(0xffF5B7B1),
-      Color(0xff997070),
-      Color(0xff663399),
-      Color(0xff008000)
+      Color(pastelPink),
+      Color(lightBrown),
+      Color(purple),
+      Color(green)
     ];
     if (task != null) {
       title = "Update your task";
@@ -163,7 +162,7 @@ class _FormTask extends StatelessWidget {
               height: 150,
               colors: colorList,
               onColorTap: (color) {
-                context.read<TaskFormBloc>().colorChanged(colorRange(color));
+                context.read<TaskFormBloc>().colorChanged(color.colorRange);
               },
               initialSelectedcolor: Color(task?.selectedColor ?? 0),
             ),
