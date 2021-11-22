@@ -89,12 +89,11 @@ class TaskFormBloc extends Cubit<TaskFormState> {
     );
   }
 
-  Future<void> submitForm(Future Function(Task) onSubmit,{Task? task }) async {
+  Future<void> submitForm(Future Function(Task) onSubmit, {Task? task}) async {
     debugPrint('${state.status}');
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
-
       final newTask = Task.create(
         title: state.title.value,
         description: state.description.value,
@@ -106,17 +105,17 @@ class TaskFormBloc extends Cubit<TaskFormState> {
       Task? currentTask = task?.copyWith(
         title: state.title.value,
         description: state.description.value,
-        date: DateTime.tryParse(state.dateTime.value) ,
+        date: DateTime.tryParse(state.dateTime.value),
         type: state.type.value,
         color: state.color.value,
       );
 
-      if(task != null){
+      if (task != null) {
         await onSubmit(currentTask!);
-      }else{
+      } else {
         await onSubmit(newTask);
       }
-      
+
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on Exception {
       emit(state.copyWith(status: FormzStatus.submissionFailure));
