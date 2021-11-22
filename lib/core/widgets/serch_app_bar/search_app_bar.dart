@@ -31,6 +31,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
     return AppBar(
       automaticallyImplyLeading: false,
       centerTitle: true,
+      // ignore: prefer_const_literals_to_create_immutables
       actions: [
         // _AppBarButtons(
         //   searchMode: searchMode,
@@ -92,16 +93,21 @@ class _AppBarButtonsState extends State<_AppBarButtons> {
   }
 }
 
-class _AppBarTextField extends StatelessWidget {
+class _AppBarTextField extends StatefulWidget {
   final Function(String) onTextChanged;
   final String searchInputPlaceHolder;
 
-  _AppBarTextField({
+  const _AppBarTextField({
     Key? key,
     required this.searchInputPlaceHolder,
     required this.onTextChanged,
   }) : super(key: key);
 
+  @override
+  State<_AppBarTextField> createState() => _AppBarTextFieldState();
+}
+
+class _AppBarTextFieldState extends State<_AppBarTextField> {
   Timer timer = Timer(const Duration(seconds: 2), () {});
 
   @override
@@ -113,12 +119,12 @@ class _AppBarTextField extends StatelessWidget {
         }
 
         timer = Timer(const Duration(milliseconds: 400), () {
-          onTextChanged(text);
+          widget.onTextChanged(text);
         });
       },
       maxLines: 1,
       decoration: InputDecoration(
-        hintText: searchInputPlaceHolder,
+        hintText: widget.searchInputPlaceHolder,
         constraints: const BoxConstraints(maxHeight: 50),
         contentPadding: const EdgeInsets.symmetric(horizontal: 10),
         enabledBorder: const OutlineInputBorder(
