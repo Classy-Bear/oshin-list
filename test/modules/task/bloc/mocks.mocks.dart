@@ -30,7 +30,7 @@ class MockTaskDataProvider extends _i1.Mock implements _i3.TaskDataProvider {
   }
 
   @override
-  _i4.Future<_i2.TaskList> getAll() =>
+  _i4.Future<_i2.TaskList> getAll({bool Function(_i2.Task)? where}) =>
       (super.noSuchMethod(Invocation.method(#getAll, []),
               returnValue: Future<_i2.TaskList>.value(_FakeTaskList_0()))
           as _i4.Future<_i2.TaskList>);
