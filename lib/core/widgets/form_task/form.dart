@@ -57,7 +57,7 @@ class _FormTaskWidgetState extends State<FormTaskWidget> {
           onFormSubmit: () {
             context.read<TaskFormBloc>().submitForm(
               (task) async {
-                if (this.widget.task == null) {
+                if (widget.task == null) {
                   await context.read<TaskBloc>().create(task);
                   Navigator.pop(context);
                   return;

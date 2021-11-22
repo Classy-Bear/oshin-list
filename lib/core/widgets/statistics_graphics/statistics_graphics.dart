@@ -68,7 +68,7 @@ class _GraphicsSelector extends StatefulWidget {
 }
 
 class __GraphicsSelectorState extends State<_GraphicsSelector> {
-  ChartType? currentSelectedGraphic = null;
+  ChartType? currentSelectedGraphic;
 
   @override
   void initState() {
