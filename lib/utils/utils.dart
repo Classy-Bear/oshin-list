@@ -6,7 +6,7 @@ import 'package:oshin_list/modules/task/bloc/bloc.dart';
 import 'package:oshin_list/modules/task/view/home_page.dart';
 import 'package:oshin_list/modules/task_information/bloc/task_form_bloc.dart';
 import 'package:oshin_list/modules/task_information/view/task_information_page.dart';
-import 'package:task_repository/src/models/models.dart';
+import 'package:task_repository/task_repository.dart';
 
 part 'router.dart';
 
