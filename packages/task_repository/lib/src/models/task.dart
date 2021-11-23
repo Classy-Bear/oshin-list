@@ -16,14 +16,19 @@ class Task extends Equatable {
       (completed == false && DateTime.now().isAfter(date ?? DateTime.now()));
 
   bool get isPastelPink =>
-      colorValidate(color) > 0 && colorValidate(color) < 20;
+      _colorValidate(color) > 0 && _colorValidate(color) < 20;
 
-  bool get isPurple => colorValidate(color) > 19 && colorValidate(color) < 40;
+  bool get isPurple => _colorValidate(color) > 19 && _colorValidate(color) < 40;
 
   bool get islightBrown =>
-      colorValidate(color) > 39 && colorValidate(color) < 60;
+      _colorValidate(color) > 39 && _colorValidate(color) < 60;
 
-  bool get isGreen => colorValidate(color) > 59;
+  bool get isGreen => _colorValidate(color) > 59;
+
+  static const pastelPink = 0xffF5B7B1;
+  static const lightBrown = 0xff997070;
+  static const purple = 0xff663399;
+  static const green = 0xff008000;
 
   const Task._({
     required this.id,
@@ -141,6 +146,8 @@ class Task extends Equatable {
       return green;
     }
   }
+
+  int _colorValidate(int? color) => color ?? Task.empty.color ?? 0;
 }
 
 extension IntTypeMethods on int {
