@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oshin_list/helper/theme.dart';
+import 'package:oshin_list/utils/theme.dart';
 import 'package:task_repository/task_repository.dart';
 
 /// Para definir los colores evuamos 4 rangos :

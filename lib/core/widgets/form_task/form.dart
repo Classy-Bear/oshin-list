@@ -5,9 +5,9 @@ import 'package:oshin_list/core/widgets/date_picker/date_picker_widget.dart';
 import 'package:oshin_list/core/widgets/text_field/text_field_widget.dart';
 import 'package:oshin_list/helper/color_helper.dart';
 import 'package:oshin_list/helper/task_type.dart';
-import 'package:oshin_list/helper/theme.dart';
 import 'package:oshin_list/modules/task/bloc/bloc.dart';
 import 'package:oshin_list/modules/task_information/bloc/task_form_bloc.dart';
+import 'package:oshin_list/utils/theme.dart';
 import 'package:task_repository/task_repository.dart';
 
 class FormTaskWidget extends StatefulWidget {
