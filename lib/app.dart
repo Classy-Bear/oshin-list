@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oshin_list/utils/theme.dart';
 import 'package:oshin_list/utils/utils.dart';
 
 class AppPage extends StatelessWidget {
@@ -9,7 +10,7 @@ class AppPage extends StatelessWidget {
     return MaterialApp(
       title: 'Oshin List',
       onGenerateRoute: onGenerateRoute,
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: mainTheme,
     );
   }
 }

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:oshin_list/utils/theme.dart';
 import 'package:task_repository/task_repository.dart';
-
-const pastelPink = 0xffF5B7B1;
-const lightBrown = 0xff997070;
-const purple = 0xff663399;
-const green = 0xff008000;
 
 /// Para definir los colores evuamos 4 rangos :
 ///[pastelPinkRange] 0-19   representa     [pastelPink]
