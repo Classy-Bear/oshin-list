@@ -7,7 +7,6 @@ import 'package:oshin_list/helper/color_helper.dart';
 import 'package:oshin_list/helper/task_type.dart';
 import 'package:oshin_list/modules/task/bloc/bloc.dart';
 import 'package:oshin_list/modules/task_information/bloc/task_form_bloc.dart';
-import 'package:oshin_list/utils/theme.dart';
 import 'package:task_repository/task_repository.dart';
 
 class FormTaskWidget extends StatefulWidget {
@@ -106,10 +105,10 @@ class _FormTask extends StatelessWidget {
     late final String title;
     late final String btnText;
     const List<Color> colorList = [
-      Color(pastelPink),
-      Color(lightBrown),
-      Color(purple),
-      Color(green)
+      Color(Task.pastelPink),
+      Color(Task.lightBrown),
+      Color(Task.purple),
+      Color(Task.green)
     ];
     if (task != null) {
       title = "Update your task";

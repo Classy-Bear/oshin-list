@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:oshin_list/utils/theme.dart';
 import 'package:task_repository/task_repository.dart';
 
 /// Para definir los colores evuamos 4 rangos :
@@ -22,16 +21,14 @@ extension ColorTange on Color {
     );
     int colorInt = int.tryParse(colorHex) ?? 0;
     switch (colorInt) {
-      case pastelPink:
+      case Task.pastelPink:
         return pastelPinkRange;
-      case purple:
+      case Task.purple:
         return purpleRange;
-      case lightBrown:
+      case Task.lightBrown:
         return lightBrownRange;
       default:
         return greenRange;
     }
   }
 }
-
-int colorValidate(int? color) => color ?? Task.empty.color ?? 0;
