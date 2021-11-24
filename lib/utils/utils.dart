@@ -9,5 +9,6 @@ import 'package:oshin_list/modules/task_information/view/task_information_page.d
 import 'package:task_repository/task_repository.dart';
 
 part 'router.dart';
+part 'theme.dart';
 
 // TODO: Limpiar estos imports, que se importe por modulo.
