@@ -25,11 +25,6 @@ class Task extends Equatable {
 
   bool get isGreen => _colorValidate(color) > 59;
 
-  static const pastelPink = 0xffF5B7B1;
-  static const lightBrown = 0xff997070;
-  static const purple = 0xff663399;
-  static const green = 0xff008000;
-
   const Task._({
     required this.id,
     required this.title,

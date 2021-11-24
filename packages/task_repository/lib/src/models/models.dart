@@ -10,3 +10,4 @@ part 'title_validator.dart';
 part 'description_validator.dart';
 part 'date_validator.dart';
 part 'color_validator.dart';
+part 'colors.dart';

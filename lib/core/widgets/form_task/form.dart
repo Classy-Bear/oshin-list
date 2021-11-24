@@ -105,10 +105,10 @@ class _FormTask extends StatelessWidget {
     late final String title;
     late final String btnText;
     const List<Color> colorList = [
-      Color(Task.pastelPink),
-      Color(Task.lightBrown),
-      Color(Task.purple),
-      Color(Task.green)
+      Color(pastelPink),
+      Color(lightBrown),
+      Color(purple),
+      Color(green)
     ];
     if (task != null) {
       title = "Update your task";
