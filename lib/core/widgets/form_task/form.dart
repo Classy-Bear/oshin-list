@@ -9,7 +9,7 @@ import 'package:oshin_list/modules/task/bloc/bloc.dart';
 import 'package:oshin_list/modules/task_information/bloc/task_form_bloc.dart';
 import 'package:task_repository/task_repository.dart';
 
-class FormTaskWidget extends StatefulWidget {
+class FormTaskWidget extends StatelessWidget {
   final Task? task;
 
   const FormTaskWidget({
@@ -18,31 +18,11 @@ class FormTaskWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<FormTaskWidget> createState() => _FormTaskWidgetState();
-}
-
-class _FormTaskWidgetState extends State<FormTaskWidget> {
-  @override
-  void initState() {
-    super.initState();
-    final task = widget.task;
-    if (task != null) {
-      context.read<TaskFormBloc>().titleChanged(task.title ?? '');
-      context.read<TaskFormBloc>().descriptionChanged(task.description ?? '');
-      context.read<TaskFormBloc>().colorChanged(task.color!);
-      context.read<TaskFormBloc>().typeChanged(task.type ?? TaskType.work);
-      context
-          .read<TaskFormBloc>()
-          .dateTimeChanged(task.date?.toIso8601String() ?? '');
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<TaskFormBloc, TaskFormState>(
       builder: (context, state) {
         return _FormTask(
-          task: widget.task,
+          task: task,
           onDateChanged: (date) {
             context
                 .read<TaskFormBloc>()
@@ -57,7 +37,7 @@ class _FormTaskWidgetState extends State<FormTaskWidget> {
           onFormSubmit: () {
             context.read<TaskFormBloc>().submitForm(
               (task) async {
-                if (widget.task == null) {
+                if (this.task == null) {
                   await context.read<TaskBloc>().create(task);
                   Navigator.pop(context);
                   return;
@@ -65,7 +45,7 @@ class _FormTaskWidgetState extends State<FormTaskWidget> {
                 await context.read<TaskBloc>().update(task);
                 Navigator.pop(context);
               },
-              task: widget.task,
+              task: task,
             );
           },
           onDescriptionChanged: (value) {
