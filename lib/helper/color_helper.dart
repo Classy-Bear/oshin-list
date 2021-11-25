@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:oshin_list/utils/theme.dart';
 import 'package:task_repository/task_repository.dart';
 
-/// Para definir los colores evuamos 4 rangos :
-///[pastelPinkRange] 0-19   representa     [pastelPink]
-///[lightBrownRange] 20-39  representa     [lightBrown]
-///[purpleRange]     40-59  representa     [purple]
-///[greenRange]      60-∞   representa     [green]
+/// Para definir los colores evaluamos 4 rangos :
 
+///[pastelPinkRange] 0-19   representa     [pastelPink]
 const pastelPinkRange = 1;
+
+///[purpleRange]     20-39  representa     [purple]
 const purpleRange = 20;
+
+///[lightBrownRange] 40-59  representa     [lightBrown]
 const lightBrownRange = 40;
+
+///[greenRange]      60-∞   representa     [green]
 const greenRange = 60;
 
 extension ColorTange on Color {
