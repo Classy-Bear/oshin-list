@@ -17,6 +17,8 @@ class TaskFormState extends Equatable {
   final TypeValidator type;
   final FormzStatus status;
 
+  bool get isInitialState => this == const TaskFormState();
+
   @override
   List<Object> get props =>
       [title, description, color, color, isoDate, type, status];
