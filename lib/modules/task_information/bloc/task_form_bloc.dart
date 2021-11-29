@@ -1,14 +1,30 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
 import 'package:task_repository/task_repository.dart';
 
 part 'task_form_state.dart';
 
 class TaskFormBloc extends Cubit<TaskFormState> {
-  TaskFormBloc() : super(const TaskFormState());
+  final Task? _task;
 
+  TaskFormBloc({
+    Task? task,
+  })  : _task = task,
+        super(
+          task == null
+              ? const TaskFormState()
+              : TaskFormState(
+                  title: TitleValidator.dirty(task.title ?? ''),
+                  description:
+                      DescriptionValidator.dirty(task.description ?? ''),
+                  color: ColorValidator.dirty(task.selectedColor),
+                  type: TypeValidator.dirty(task.type ?? TaskType.work),
+                  isoDate: IsoDateValidator.dirty(
+                    task.date?.toIso8601String() ?? '',
+                  ),
+                ),
+        );
   void titleChanged(String value) {
     final title = TitleValidator.dirty(value);
     emit(
@@ -89,33 +105,27 @@ class TaskFormBloc extends Cubit<TaskFormState> {
     );
   }
 
-  Future<void> submitForm(Future Function(Task) onSubmit, {Task? task}) async {
-    debugPrint('${state.status}');
+  Future<void> submitForm(Future Function(Task) onSubmit) async {
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
-      final newTask = Task.create(
-        title: state.title.value,
-        description: state.description.value,
-        date: DateTime.parse(state.isoDate.value),
-        color: state.color.value,
-        type: state.type.value,
+      await onSubmit(
+        _task == null
+            ? Task.create(
+                title: state.title.value,
+                description: state.description.value,
+                date: DateTime.parse(state.isoDate.value),
+                color: state.color.value,
+                type: state.type.value,
+              )
+            : _task!.copyWith(
+                title: state.title.value,
+                description: state.description.value,
+                date: DateTime.tryParse(state.isoDate.value),
+                type: state.type.value,
+                color: state.color.value,
+              ),
       );
-
-      Task? currentTask = task?.copyWith(
-        title: state.title.value,
-        description: state.description.value,
-        date: DateTime.tryParse(state.isoDate.value),
-        type: state.type.value,
-        color: state.color.value,
-      );
-
-      if (task != null) {
-        await onSubmit(currentTask!);
-      } else {
-        await onSubmit(newTask);
-      }
-
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on Exception {
       emit(state.copyWith(status: FormzStatus.submissionFailure));

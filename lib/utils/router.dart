@@ -28,9 +28,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
         builder: (_) => MultiBlocProvider(
           providers: [
             BlocProvider.value(value: taskBloc),
-            BlocProvider.value(value: taskFormBloc),
+            BlocProvider.value(value: TaskFormBloc(task: task)),
           ],
-          child: TaskInformationPage(task: task),
+          child: const TaskInformationPage(),
         ),
       );
     default:
