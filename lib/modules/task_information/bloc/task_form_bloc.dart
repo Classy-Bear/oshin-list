@@ -18,7 +18,7 @@ class TaskFormBloc extends Cubit<TaskFormState> {
           title,
           state.description,
           state.color,
-          state.dateTime,
+          state.isoDate,
           state.type,
         ]),
       ),
@@ -34,7 +34,7 @@ class TaskFormBloc extends Cubit<TaskFormState> {
           state.title,
           description,
           state.color,
-          state.dateTime,
+          state.isoDate,
           state.type,
         ]),
       ),
@@ -50,7 +50,7 @@ class TaskFormBloc extends Cubit<TaskFormState> {
           state.title,
           state.description,
           color,
-          state.dateTime,
+          state.isoDate,
           state.type,
         ]),
       ),
@@ -58,15 +58,15 @@ class TaskFormBloc extends Cubit<TaskFormState> {
   }
 
   void dateTimeChanged(String value) {
-    final dateTime = DateTimeValidator.dirty(value);
+    final isoDate = IsoDateValidator.dirty(value);
     emit(
       state.copyWith(
-        dateTime: dateTime,
+        isoDate: isoDate,
         status: Formz.validate([
           state.title,
           state.description,
           state.color,
-          dateTime,
+          isoDate,
           state.type,
         ]),
       ),
@@ -82,7 +82,7 @@ class TaskFormBloc extends Cubit<TaskFormState> {
           state.title,
           state.description,
           state.color,
-          state.dateTime,
+          state.isoDate,
           type,
         ]),
       ),
@@ -97,7 +97,7 @@ class TaskFormBloc extends Cubit<TaskFormState> {
       final newTask = Task.create(
         title: state.title.value,
         description: state.description.value,
-        date: DateTime.parse(state.dateTime.value),
+        date: DateTime.parse(state.isoDate.value),
         color: state.color.value,
         type: state.type.value,
       );
@@ -105,7 +105,7 @@ class TaskFormBloc extends Cubit<TaskFormState> {
       Task? currentTask = task?.copyWith(
         title: state.title.value,
         description: state.description.value,
-        date: DateTime.tryParse(state.dateTime.value),
+        date: DateTime.tryParse(state.isoDate.value),
         type: state.type.value,
         color: state.color.value,
       );

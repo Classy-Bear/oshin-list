@@ -5,7 +5,7 @@ class TaskFormState extends Equatable {
     this.title = const TitleValidator.pure(),
     this.description = const DescriptionValidator.pure(),
     this.color = const ColorValidator.pure(),
-    this.dateTime = const DateTimeValidator.pure(),
+    this.isoDate = const IsoDateValidator.pure(),
     this.type = const TypeValidator.pure(),
     this.status = FormzStatus.pure,
   });
@@ -13,19 +13,19 @@ class TaskFormState extends Equatable {
   final TitleValidator title;
   final DescriptionValidator description;
   final ColorValidator color;
-  final DateTimeValidator dateTime;
+  final IsoDateValidator isoDate;
   final TypeValidator type;
   final FormzStatus status;
 
   @override
   List<Object> get props =>
-      [title, description, color, color, dateTime, type, status];
+      [title, description, color, color, isoDate, type, status];
 
   TaskFormState copyWith({
     TitleValidator? title,
     DescriptionValidator? description,
     ColorValidator? color,
-    DateTimeValidator? dateTime,
+    IsoDateValidator? isoDate,
     TypeValidator? type,
     FormzStatus? status,
   }) {
@@ -33,7 +33,7 @@ class TaskFormState extends Equatable {
       title: title ?? this.title,
       description: description ?? this.description,
       color: color ?? this.color,
-      dateTime: dateTime ?? this.dateTime,
+      isoDate: isoDate ?? this.isoDate,
       type: type ?? this.type,
       status: status ?? this.status,
     );
