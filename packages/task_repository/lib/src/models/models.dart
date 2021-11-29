@@ -8,6 +8,6 @@ part 'task_list.dart';
 part 'type_validator.dart';
 part 'title_validator.dart';
 part 'description_validator.dart';
-part 'date_validator.dart';
+part 'iso_date_validator.dart';
 part 'color_validator.dart';
 part 'color.dart';
