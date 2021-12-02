@@ -18,22 +18,18 @@ class _StatisticsPageState extends State<StatisticsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.watch<TaskBloc>();
+    final state = context.watch<TaskBloc>().state;
     return TasksGraphics(
-      tasks: bloc.state.tasks,
+      tasks: state.tasks,
       onChangedChart: (newChart) {
         setState(() {
           selectedChart = newChart;
         });
       },
       selectedChart: selectedChart,
-      completedCount: bloc.state.tasks
-          .where(where: (task) => task.completed ?? false)
-          .length,
-      overdueCount:
-          bloc.state.tasks.where(where: (task) => task.isOverdue).length,
-      pendingCount:
-          bloc.state.tasks.where(where: (task) => task.isPending).length,
+      completedCount: state.completedTasks.length,
+      overdueCount: state.overdueTasks.length,
+      pendingCount: state.pendingTasks.length,
     );
   }
 }

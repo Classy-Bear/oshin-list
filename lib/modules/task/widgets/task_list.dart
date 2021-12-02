@@ -11,11 +11,7 @@ class _TaskListWidgetState extends State<TaskListWidget> {
   @override
   void initState() {
     super.initState();
-    context.read<TaskBloc>().getAll(
-      where: (task) {
-        return task.isPending;
-      },
-    );
+    context.read<TaskBloc>().getAll();
   }
 
   @override
@@ -32,23 +28,20 @@ class _TaskListWidgetState extends State<TaskListWidget> {
         tasks: state.tasks,
         onDone: (task) async {
           await context.read<TaskBloc>().update(task.copyWith(completed: true));
-          await context.read<TaskBloc>().getAll(
-                where: (task) => task.isPending == true,
-              );
         },
         onDelete: (task) => context.read<TaskBloc>().delete(task.id ?? '-1'),
         onLongPress: (task) async {
           if (task.completed ?? false) return;
-          await Navigator.pushNamed(
+          final taskUpdated = await Navigator.pushNamed(
             context,
             TaskInformationPage.route,
             arguments: ScreenArguments(
               task.toMap(),
             ),
           );
-          context.read<TaskBloc>().getAll(
-                where: (task) => task.isPending == true,
-              );
+          if (taskUpdated != null && task != taskUpdated) {
+            context.read<TaskBloc>().getAll();
+          }
         },
       );
     }

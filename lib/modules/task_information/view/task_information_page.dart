@@ -23,7 +23,7 @@ class TaskInformationPage extends StatelessWidget {
             } else {
               await context.read<TaskBloc>().update(task);
             }
-            Navigator.pop(context);
+            Navigator.pop(context, task);
           },
         );
       },
