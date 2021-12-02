@@ -24,12 +24,11 @@ class _TaskListWidgetState extends State<TaskListWidget> {
         ),
       );
     } else if (state.status == FetchStatus.success) {
+      final bloc = context.read<TaskBloc>();
       return _TaskListView(
         tasks: state.tasks,
-        onDone: (task) async {
-          await context.read<TaskBloc>().update(task.copyWith(completed: true));
-        },
-        onDelete: (task) => context.read<TaskBloc>().delete(task.id ?? '-1'),
+        onDone: (task) => bloc.update(task.copyWith(completed: true)),
+        onDelete: (task) => bloc.delete(task.id ?? '-1'),
         onLongPress: (task) async {
           if (task.completed ?? false) return;
           final taskUpdated = await Navigator.pushNamed(
@@ -40,7 +39,7 @@ class _TaskListWidgetState extends State<TaskListWidget> {
             ),
           );
           if (taskUpdated != null && task != taskUpdated) {
-            context.read<TaskBloc>().getAll();
+            bloc.getAll();
           }
         },
       );

@@ -11,17 +11,19 @@ class TaskInformationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasNoTask = context.read<TaskFormBloc>().state.isInitialState;
+    final bloc = context.read<TaskFormBloc>();
+    final hasNoTask = bloc.state.isInitialState;
     final String title = hasNoTask ? "Create your task" : "Update your task";
     return _TaskInformationView(
       title: title,
       onSubmit: () {
-        context.read<TaskFormBloc>().submitForm(
+        bloc.submitForm(
           (task) async {
+            final bloc = context.read<TaskBloc>();
             if (hasNoTask) {
-              await context.read<TaskBloc>().create(task);
+              await bloc.create(task);
             } else {
-              await context.read<TaskBloc>().update(task);
+              await bloc.update(task);
             }
             Navigator.pop(context, task);
           },
