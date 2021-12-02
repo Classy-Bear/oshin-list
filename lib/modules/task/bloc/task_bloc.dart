@@ -36,7 +36,7 @@ class TaskBloc extends Cubit<TaskState> {
     emit(state.copyWith(status: FetchStatus.loading));
     try {
       final newTask = await _taskRepository.create(task);
-      final newTaskList = state.tasks.add(task: newTask);
+      final newTaskList = state._tasks.add(task: newTask);
       emit(state.copyWith(tasks: newTaskList, status: FetchStatus.success));
     } catch (error) {
       emit(state.copyWith(status: FetchStatus.failure));
@@ -48,7 +48,7 @@ class TaskBloc extends Cubit<TaskState> {
     emit(state.copyWith(status: FetchStatus.loading));
     try {
       final newTask = await _taskRepository.update(task);
-      final newTaskList = state.tasks
+      final newTaskList = state._tasks
           .replaceWhere(task: newTask, where: (task) => task.id == newTask.id);
       emit(state.copyWith(tasks: newTaskList, status: FetchStatus.success));
     } catch (error) {
@@ -62,13 +62,15 @@ class TaskBloc extends Cubit<TaskState> {
     emit(state.copyWith(status: FetchStatus.loading));
     try {
       await _taskRepository.delete(id);
-      final newTaskList = state.tasks.removeWhere(
+      final newTaskList = state._tasks.removeWhere(
         where: (task) => task.id == id,
       );
-      debugPrint('${newTaskList == state.tasks}');
+      debugPrint('${newTaskList == state._tasks}');
       emit(state.copyWith(tasks: newTaskList, status: FetchStatus.success));
     } catch (error) {
       emit(state.copyWith(status: FetchStatus.failure));
     }
   }
+
+  void setFilter(Filter filter) => emit(state.copyWith(filter: filter));
 }

@@ -19,21 +19,18 @@ class _TaskFiltersWidgetState extends State<TaskFiltersWidget> {
           'OverDue',
         ],
         onFilterSelect: (filters) {
-          context.read<TaskBloc>().getAll(
-            where: (task) {
-              if (filters.isEmpty) return true;
-              for (var filter in filters) {
-                if (filter == 'Pending' && task.isPending) {
-                  return true;
-                } else if (filter == 'Done' && (task.completed ?? false)) {
-                  return true;
-                } else if (filter == 'OverDue' && task.isOverdue) {
-                  return true;
-                }
-              }
-              return false;
-            },
-          );
+          /// TODO: Use Filters instead of Strings
+          final bloc = context.read<TaskBloc>();
+          for (var filter in filters) {
+            if (filter == 'Pending') {
+              return bloc.setFilter(Filter.pending);
+            } else if (filter == 'Done') {
+              return bloc.setFilter(Filter.completed);
+            } else if (filter == 'OverDue') {
+              return bloc.setFilter(Filter.overdue);
+            }
+          }
+          return bloc.setFilter(Filter.none);
         },
       ),
     );
