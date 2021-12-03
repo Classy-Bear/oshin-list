@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         currentTab = _tabController.index;
       });
     });
+    context.read<TaskBloc>().getAll();
   }
 
   @override
@@ -48,14 +49,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       floatingActionButton: Offstage(
         offstage: currentTab != 0,
         child: FloatingActionButton(
-          onPressed: () async {
-            await Navigator.pushNamed(context, TaskInformationPage.route);
-            await context.read<TaskBloc>().getAll(
-              where: (task) {
-                return task.isPending;
-              },
-            );
-          },
+          onPressed: () => Navigator.pushNamed(
+            context,
+            TaskInformationPage.route,
+          ),
           child: const Icon(Icons.add),
         ),
       ),

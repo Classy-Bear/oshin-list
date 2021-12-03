@@ -73,7 +73,7 @@ class __GraphicsSelectorState extends State<_GraphicsSelector> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 500), () {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       setState(() {
         currentSelectedGraphic = ChartType.bar;
         widget.onSelectionChanged(currentSelectedGraphic!);
