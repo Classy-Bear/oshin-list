@@ -1,18 +1,7 @@
 part of 'widgets.dart';
 
-class TaskListWidget extends StatefulWidget {
+class TaskListWidget extends StatelessWidget {
   const TaskListWidget({Key? key}) : super(key: key);
-
-  @override
-  State<TaskListWidget> createState() => _TaskListWidgetState();
-}
-
-class _TaskListWidgetState extends State<TaskListWidget> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<TaskBloc>().getAll();
-  }
 
   @override
   Widget build(BuildContext context) {
