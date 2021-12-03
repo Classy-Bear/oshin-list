@@ -59,7 +59,6 @@ class _TaskListView extends StatelessWidget {
         itemBuilder: (context, index) {
           Task task = tasks.elementAt(index: index);
           return TaskTileWidget(
-            // key: ObjectKey(task),
             task: task,
             onDone: onDone,
             onDelete: onDelete,

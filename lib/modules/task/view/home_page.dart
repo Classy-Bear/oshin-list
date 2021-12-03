@@ -20,7 +20,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late final TabController _tabController;
 
-  var currentTab = 0;
+  var _currentTab = 0;
 
   @override
   void initState() {
@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     _tabController.addListener(() {
       setState(() {
-        currentTab = _tabController.index;
+        _currentTab = _tabController.index;
       });
     });
     context.read<TaskBloc>().getAll();
@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
-        child: CurrentAppBarWidget(selectedIndex: currentTab),
+        child: CurrentAppBarWidget(selectedIndex: _currentTab),
       ),
       body: TabBarView(
         controller: _tabController,
@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       ),
       bottomNavigationBar: TabNavBarWidget(controller: _tabController),
       floatingActionButton: Offstage(
-        offstage: currentTab != 0,
+        offstage: _currentTab != 0,
         child: FloatingActionButton(
           onPressed: () => Navigator.pushNamed(
             context,
