@@ -5,15 +5,6 @@ class TaskPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const TasksView();
-  }
-}
-
-class TasksView extends StatelessWidget {
-  const TasksView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
     return Column(
       children: const [
         TaskFiltersWidget(),
