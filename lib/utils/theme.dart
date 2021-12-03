@@ -1,3 +1,3 @@
-import 'package:flutter/material.dart';
+part of 'utils.dart';
 
-ThemeData mainTheme = ThemeData(primarySwatch: Colors.blue);
+final mainTheme = ThemeData(primarySwatch: Colors.blue);
